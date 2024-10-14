@@ -34,9 +34,9 @@ public:
     Weapon(std::string name, int damage, bool isTwoHanded, Element element = Element::None)
         : Item(name), damage(damage), isTwoHanded(isTwoHanded), element(element) {}
 
-    int getDamage() const;
-    bool getIsTwoHanded() const;
-    Element getElement() const;
-    std::string getName() const;
-    std::string getType() const override;
+    int getDamage() const { return damage; };
+    bool getIsTwoHanded() const { return isTwoHanded; };
+    Element getElement() const { return element; }
+    std::string getName() const { return name; };
+    std::string getType() const override { return "Weapon"; }
 };
