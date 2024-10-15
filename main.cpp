@@ -4,11 +4,36 @@
 #include "Character.h"
 #include "Weapon.h"
 #include "Armor.h"
-#include "Potion.h"
 #include "Combat.h"
 #include "Inventory.h"
 #include <cstdlib>
 #include <ctime>
+
+void showInventoryMenu(Character& character) {
+    int choice = 0;
+    do {
+        std::cout << "\n=== MENU INVENTAIRE ===\n";
+        std::cout << "1. Afficher l'inventaire\n";
+        std::cout << "2. Afficher les informations du personnage\n";
+        std::cout << "3. Quitter le menu\n";
+        std::cout << "Choisissez une option: ";
+        std::cin >> choice;
+
+        switch (choice) {
+        case 1:
+            character.getInventory().displayInventory();
+            break;
+        case 2:
+            character.displayCharacterInfo();
+            break;
+        case 3:
+            std::cout << "Retour au menu principal...\n";
+            break;
+        default:
+            std::cout << "Option non valide. Veuillez choisir à nouveau.\n";
+        }
+    } while (choice != 3);
+}
 
 int main() {
     srand(static_cast<unsigned>(time(0))); // Initialisation du générateur de nombres aléatoires
@@ -126,14 +151,43 @@ int main() {
     character2.equipWeapon(classWeapons[classType2][1]);  // Deuxième arme de la classe
     character2.equipArmor(classArmors[classType2][1]);    // Deuxième armure de la classe
 
-    // Afficher les informations des personnages avant le combat
-    std::cout << "\n\t\tInformations du Personnage 1:\n";
-    character1.displayCharacterInfo();
-    std::cout << "\n\t\tInformations du Personnage 2:\n";
-    character2.displayCharacterInfo();
+    // Menu avant le combat
+    int action = 0;
+    do {
+        std::cout << "\n=== MENU PRINCIPAL ===\n";
+        std::cout << "1. Afficher l'inventaire du personnage 1\n";
+        std::cout << "2. Lancer le combat\n";
+        std::cout << "Choisissez une option: ";
+        std::cin >> action;
+
+        if (action == 1) {
+            showInventoryMenu(character1);
+        }
+        else if (action != 2) {
+            std::cout << "Option non valide.\n";
+        }
+
+    } while (action != 2);
 
     // Combat
     Combat::engage(character1, character2);
+
+    // Menu après le combat
+    do {
+        std::cout << "\n=== MENU POST-COMBAT ===\n";
+        std::cout << "1. Afficher l'inventaire du personnage 1\n";
+        std::cout << "2. Quitter\n";
+        std::cout << "Choisissez une option: ";
+        std::cin >> action;
+
+        if (action == 1) {
+            showInventoryMenu(character1);
+        }
+        else if (action != 2) {
+            std::cout << "Option non valide.\n";
+        }
+
+    } while (action != 2);
 
     return 0;
 }
