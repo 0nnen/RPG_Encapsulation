@@ -25,8 +25,12 @@ private:
     ClassType classType;
     int health;
     int maxHealth;
+    int defense;
+    int defenseBuff;
+    int attackBuff;
     int stamina;
     int maxStamina;
+    int evadeChance;
     bool synergyDetected;
     Weapon* mainWeapon;
     Armor* armor;
@@ -36,20 +40,28 @@ private:
 public:
     Character(std::string name, ClassType classType);
 
-    // Encapsulation des stats
-    int getHealth() const;
+    // Getters and setters for encapsulation
+    Inventory& getInventory() { return inventory; }
+    int getHealth() const { return health; };
+    int getMaxHealth() const { return maxHealth; };
+    int getStamina() const { return stamina; };
+    int getMaxStamina() const { return maxHealth; };
+    int getDefense() const { return defense + defenseBuff; };
+    int getDefenseBuff() const { return defenseBuff; };
+    int getAttackBuff() const { return attackBuff; };
+    int getEvadeChance() const { return evadeChance; };
+    std::vector<Skill> getSkills() const { return skills; };
+    std::string getName() const { return name; }
+    ClassType getClassType() const { return classType; };
     void setHealth(int health);
-    int getMaxHealth() const;
-    int getStamina() const;
     void setStamina(int stamina);
-    int getMaxStamina() const;
 
-    // Méthodes d'équipement et de gestion
+    // Methods to manage equipment and inventory
     void equipWeapon(Weapon* weapon);
     void equipArmor(Armor* armor);
     void addSkill(Skill skill);
 
-    // Méthodes de combat
+    // Combat methods
     void takeDamage(int damage);
     bool isAlive() const;
     void useSkill(Character& opponent, int skillIndex);
@@ -57,16 +69,17 @@ public:
     bool hasElementalSynergy() const;
     Element getWeaponElement() const;
 
-    // Fonctions pour gérer les effets de statut
+    void increaseDefense(int amount);
+    void increaseAttack(int amount);
+    void increaseEvadeChance(int amount);
+
+    // Status effect management
     StatusEffect getStatusEffectFromSynergy() const;
     void applyStatusEffect(StatusEffect statusEffect);
 
-    std::vector<Skill> getSkills() const;
 
-    // Fonction pour afficher les infos du personnage avant le combat
+    // Display character info
     void displayCharacterInfo() const;
 
-    std::string getName() const { return name; }
-    ClassType getClassType() const;
     static std::string getClassName(ClassType classType);
 };
