@@ -3,8 +3,6 @@
 #include <iostream>
 #include <memory>
 #include "Item.h"
-#include "Weapon.h"
-#include "Armor.h"
 
 class Inventory {
 private:
@@ -14,5 +12,6 @@ public:
     void addItem(std::unique_ptr<Item> item);
     Item* getItem(int index);
     void displayInventory() const;
-    void loadInventoryFromFile(const std::string& filePath);
+    void addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems);
+    size_t getSize() const { return items.size(); }
 };

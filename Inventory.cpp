@@ -1,14 +1,16 @@
 #include "Inventory.h"
-#include <fstream>
-#include <sstream>
+#include "Item.h"
+#include "Weapon.h"
+#include "Armor.h"
+#include <iostream>
 
 void Inventory::addItem(std::unique_ptr<Item> item) {
-    items.push_back(std::move(item));  // Transfert de propriété du pointeur
+    items.push_back(std::move(item));
 }
 
 Item* Inventory::getItem(int index) {
     if (index >= 0 && index < items.size()) {
-        return items[index].get();  // Accès direct à l'item via .get()
+        return items[index].get();
     }
     return nullptr;
 }
@@ -19,40 +21,15 @@ void Inventory::displayInventory() const {
     }
 }
 
-void Inventory::loadInventoryFromFile(const std::string& filePath) {
-    std::ifstream file(filePath);
-    if (!file.is_open()) {
-        std::cerr << "Erreur: Impossible d'ouvrir le fichier " << filePath << std::endl;
-        return;
-    }
-
-    std::string line;
-    while (std::getline(file, line)) {
-        if (line.empty() || line[0] == '#') continue;  // Ignorer les lignes vides ou les commentaires
-
-        std::stringstream ss(line);
-        std::string name, type, statStr, elementStr;
-
-        std::getline(ss, name, ';');
-        std::getline(ss, type, ';');
-        std::getline(ss, statStr, ';');
-        std::getline(ss, elementStr, ';');
-
-        int stat = std::stoi(statStr);
-        Element element = Element::None;
-        if (elementStr == "Fire") element = Element::Fire;
-        else if (elementStr == "Ice") element = Element::Ice;
-        else if (elementStr == "Divine") element = Element::Divine;
-        else if (elementStr == "Poison") element = Element::Poison;
-        else if (elementStr == "Dark") element = Element::Dark;
-
-        if (type == "Weapon") {
-            addItem(std::make_unique<Weapon>(name, stat, false, element));
+// Ajoute les objets à l'inventaire
+void Inventory::addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems) {
+    for (const auto& item : allItems) {
+        // Ajoute une copie de l'objet en vérifiant s'il s'agit d'une arme ou d'une armure
+        if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+            addItem(std::make_unique<Weapon>(*weapon));  // Copie l'objet Weapon
         }
-        else if (type == "Armor") {
-            addItem(std::make_unique<Armor>(name, stat, element));
+        else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+            addItem(std::make_unique<Armor>(*armor));  // Copie l'objet Armor
         }
     }
-
-    file.close();
 }

@@ -1,35 +1,35 @@
-# Format: Nom;Type;Statistiques (Attaque/Defense);Element;Classes autorisées
+# Format: Nom;Type;Statistiques (Attaque/Defense);Element
 
 # Armes
-Epee du Guerrier;Weapon;25;None;Warrior
-Hache du Guerrier;Weapon;35;Fire;Warrior
-Baton du Mage;Weapon;20;Ice;Mage
-Baguette du Mage;Weapon;15;Fire;Mage
-Epee du Chevalier;Weapon;30;None;Knight
-Lance du Chevalier;Weapon;40;Divine;Knight
-Dague de l'Assassin;Weapon;18;Poison;Assassin
-Lame de l'Assassin;Weapon;25;Dark;Assassin
-Hache du Berserker;Weapon;35;Fire;Berserker
-Massue du Berserker;Weapon;30;None;Berserker
-Masse du Paladin;Weapon;30;Divine;Paladin
-Marteau du Paladin;Weapon;40;Divine;Paladin
-Arc du Ranger;Weapon;20;None;Ranger
-Arbalete du Ranger;Weapon;25;Ice;Ranger
-Baton du Necromancien;Weapon;20;Dark;Necromancer
-Dague du Necromancien;Weapon;15;Poison;Necromancer
+Epee du Guerrier;Weapon;25;None
+Hache du Guerrier;Weapon;35;Fire
+Baton du Mage;Weapon;20;Ice
+Baguette du Mage;Weapon;15;Fire
+Epee du Chevalier;Weapon;30;None
+Lance du Chevalier;Weapon;40;Divine
+Dague de l'Assassin;Weapon;18;Poison
+Lame de l'Assassin;Weapon;25;Dark
+Hache du Berserker;Weapon;35;Fire
+Massue du Berserker;Weapon;30;None
+Masse du Paladin;Weapon;30;Divine
+Marteau du Paladin;Weapon;40;Divine
+Arc du Ranger;Weapon;20;None
+Arbalete du Ranger;Weapon;25;Ice
+Baton du Necromancien;Weapon;20;Dark
+Dague du Necromancien;Weapon;15;Poison
 
 # Armures
-Armure de Cuir;Armor;10;None;Warrior,Knight,Ranger
-Armure de Feu;Armor;15;Fire;Warrior
-Robe de Glace;Armor;8;Ice;Mage,Necromancer
-Robe de Feu;Armor;8;Fire;Mage,Necromancer
-Armure Lourde;Armor;20;None;Knight
-Armure Divine;Armor;25;Divine;Paladin
-Armure Legere;Armor;10;Dark;Assassin,Necromancer
-Armure Empoisonnee;Armor;12;Poison;Assassin,Necromancer
-Armure de Rage;Armor;12;Fire;Berserker
-Armure Sacree;Armor;18;Divine;Paladin
-Armure Benie;Armor;20;Divine;Paladin
-Armure de Glace;Armor;14;Ice;Ranger
-Robe des Ombres;Armor;8;Dark;Necromancer
-Robe Empoisonnee;Armor;10;Poison;Necromancer
+Armure de Cuir;Armor;10;None
+Armure de Feu;Armor;15;Fire
+Robe de Glace;Armor;8;Ice
+Robe de Feu;Armor;8;Fire
+Armure Lourde;Armor;20;None
+Armure Divine;Armor;25;Divine
+Armure Legere;Armor;10;Dark
+Armure Empoisonnee;Armor;12;Poison
+Armure de Rage;Armor;12;Fire
+Armure Sacree;Armor;18;Divine
+Armure Benie;Armor;20;Divine
+Armure de Glace;Armor;14;Ice
+Robe des Ombres;Armor;8;Dark
+Robe Empoisonnee;Armor;10;Poison

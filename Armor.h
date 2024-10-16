@@ -8,9 +8,10 @@ private:
     Element element;  // Élément de résistance de l'armure
 
 public:
-    Armor(std::string name, int defense, Element element = Element::None);
+    Armor(std::string name, int defense, Element element = Element::None)
+        : Item(name), defense(defense), element(element) {}
 
-    int getDefense() const;
-    Element getElement() const;
-    std::string getType() const override;
+    int getDefense() const { return defense; };
+    Element getElement() const { return element; };
+    std::string getType() const override { return "Armor"; };
 };
