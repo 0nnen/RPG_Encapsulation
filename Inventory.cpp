@@ -15,9 +15,42 @@ Item* Inventory::getItem(int index) {
     return nullptr;
 }
 
+// Méthode pour afficher uniquement les armes ou armures de l'inventaire
+void Inventory::displayInventoryByType(const std::string& type) const {
+    bool headerShown = false;
+
+    for (size_t i = 0; i < items.size(); ++i) {
+        const auto& item = items[i];
+        if (item->getType() == type) {
+            if (!headerShown) {
+                std::cout << "\n\t\t=== " << (type == "Weapon" ? "ARMES" : "ARMURES") << " ===\n";
+                headerShown = true;
+            }
+            std::cout << "ID: " << i << " - " << item->getName() << " (" << item->getType() << ")\n";
+        }
+    }
+}
+
 void Inventory::displayInventory() const {
-    for (const auto& item : items) {
-        std::cout << "Item: " << item->getName() << " (" << item->getType() << ")\n";
+    bool weaponsShown = false;
+    bool armorsShown = false;
+    bool potionsShown = false;
+
+    for (size_t i = 0; i < items.size(); ++i) {
+        const auto& item = items[i];
+        if (item->getType() == "Weapon" && !weaponsShown) {
+            std::cout << "\n\t\t=== ARMES ===\n";
+            weaponsShown = true;
+        }
+        if (item->getType() == "Armor" && !armorsShown) {
+            std::cout << "\n\t\t=== ARMURES ===\n";
+            armorsShown = true;
+        }
+        if (item->getType() == "Potion" && !potionsShown) {
+            std::cout << "\n=== POTIONS ===\n";
+            potionsShown = true;
+        }
+        std::cout << "ID: " << i << "\t" << item->getName() << " (" << item->getType() << ")\n";
     }
 }
 

@@ -10,5 +10,5 @@ public:
         : Item(name), healingAmount(healingAmount) {}
 
     int getHealingAmount() const { return healingAmount; }
-    std::string getType() const override;
+    std::string getType() const override {  return "Potion"; }
 };
