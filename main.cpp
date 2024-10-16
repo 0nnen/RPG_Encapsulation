@@ -9,13 +9,16 @@
 #include <cstdlib>
 #include <ctime>
 
-void showInventoryMenu(Character& character) {
+// Affiche le menu de gestion des personnages pour équiper ou afficher des informations
+void showCharacterMenu(Character& character) {
     int choice = 0;
     do {
-        std::cout << "\n=== MENU INVENTAIRE ===\n";
+        std::cout << "\n=== MENU DU PERSONNAGE: " << character.getName() << " ===\n";
         std::cout << "1. Afficher l'inventaire\n";
         std::cout << "2. Afficher les informations du personnage\n";
-        std::cout << "3. Quitter le menu\n";
+        std::cout << "3. Equiper une arme\n";
+        std::cout << "4. Equiper une armure\n";
+        std::cout << "5. Retour\n";
         std::cout << "Choisissez une option: ";
         std::cin >> choice;
 
@@ -26,6 +29,49 @@ void showInventoryMenu(Character& character) {
         case 2:
             character.displayCharacterInfo();
             break;
+        case 3: {
+            int itemIndex;
+            std::cout << "Sélectionnez une arme dans l'inventaire (index): ";
+            std::cin >> itemIndex;
+            character.equipWeapon(dynamic_cast<Weapon*>(character.getInventory().getItem(itemIndex)));
+            std::cout << "Arme équipée!\n";
+            break;
+        }
+        case 4: {
+            int itemIndex;
+            std::cout << "Sélectionnez une armure dans l'inventaire (index): ";
+            std::cin >> itemIndex;
+            character.equipArmor(dynamic_cast<Armor*>(character.getInventory().getItem(itemIndex)));
+            std::cout << "Armure équipée!\n";
+            break;
+        }
+        case 5:
+            std::cout << "Retour au menu précédent...\n";
+            break;
+        default:
+            std::cout << "Option non valide. Veuillez choisir à nouveau.\n";
+        }
+    } while (choice != 5);
+}
+
+// Affiche le menu de gestion des personnages (choisir entre le personnage 1 et 2)
+void showManageCharactersMenu(Character& character1, Character& character2) {
+    int choice = 0;
+    do {
+        std::cout << "\n=== GESTION DES PERSONNAGES ===\n";
+        std::cout << "1. Gérer le personnage 1\n";
+        std::cout << "2. Gérer le personnage 2\n";
+        std::cout << "3. Retour au menu principal\n";
+        std::cout << "Choisissez une option: ";
+        std::cin >> choice;
+
+        switch (choice) {
+        case 1:
+            showCharacterMenu(character1);
+            break;
+        case 2:
+            showCharacterMenu(character2);
+            break;
         case 3:
             std::cout << "Retour au menu principal...\n";
             break;
@@ -35,107 +81,42 @@ void showInventoryMenu(Character& character) {
     } while (choice != 3);
 }
 
+// Menu principal pour accéder à la gestion des personnages ou lancer le combat
+void showMainMenu(Character& character1, Character& character2) {
+    int choice = 0;
+    do {
+        std::cout << "\n=== MENU PRINCIPAL ===\n";
+        std::cout << "1. Gestion des personnages\n";
+        std::cout << "2. Lancer le combat\n";
+        std::cout << "3. Quitter\n";
+        std::cout << "Choisissez une option: ";
+        std::cin >> choice;
+
+        switch (choice) {
+        case 1:
+            showManageCharactersMenu(character1, character2);
+            break;
+        case 2:
+            std::cout << "Lancement du combat...\n";
+            Combat::engage(character1, character2);
+            break;
+        case 3:
+            std::cout << "Au revoir!\n";
+            break;
+        default:
+            std::cout << "Option non valide. Veuillez choisir à nouveau.\n";
+        }
+    } while (choice != 3);
+}
+
 int main() {
-    srand(static_cast<unsigned>(time(0))); // Initialisation du générateur de nombres aléatoires
+    srand(static_cast<unsigned>(time(0)));  // Initialisation du générateur de nombres aléatoires
 
     // Création d'un inventaire
     Inventory inventory;
 
-    // Armes spécifiques pour chaque classe (2 armes par classe) avec std::unique_ptr
-    auto warriorSword = std::make_unique<Weapon>("Epee du Guerrier", 25, false, Element::None);
-    auto warriorAxe = std::make_unique<Weapon>("Hache du Guerrier", 35, true, Element::Fire);
-    auto mageStaff = std::make_unique<Weapon>("Baton du Mage", 20, true, Element::Ice);
-    auto mageWand = std::make_unique<Weapon>("Baguette du Mage", 15, false, Element::Fire);
-    auto knightSword = std::make_unique<Weapon>("Epee du Chevalier", 30, false, Element::None);
-    auto knightLance = std::make_unique<Weapon>("Lance du Chevalier", 40, true, Element::Divine);
-    auto assassinDagger = std::make_unique<Weapon>("Dague de l'Assassin", 18, false, Element::Poison);
-    auto assassinBlade = std::make_unique<Weapon>("Lame de l'Assassin", 25, false, Element::Dark);
-    auto berserkerAxe = std::make_unique<Weapon>("Hache du Berserker", 35, true, Element::Fire);
-    auto berserkerClub = std::make_unique<Weapon>("Massue du Berserker", 30, false, Element::None);
-    auto paladinMace = std::make_unique<Weapon>("Masse du Paladin", 30, false, Element::Divine);
-    auto paladinHammer = std::make_unique<Weapon>("Marteau du Paladin", 40, true, Element::Divine);
-    auto rangerBow = std::make_unique<Weapon>("Arc du Ranger", 20, true, Element::None);
-    auto rangerCrossbow = std::make_unique<Weapon>("Arbalete du Ranger", 25, false, Element::Ice);
-    auto necromancerStaff = std::make_unique<Weapon>("Baton du Necromancien", 20, true, Element::Dark);
-    auto necromancerDagger = std::make_unique<Weapon>("Dague du Necromancien", 15, false, Element::Poison);
-
-    // Ajouter les armes à l'inventaire avec std::move
-    inventory.addItem(std::move(warriorSword));
-    inventory.addItem(std::move(warriorAxe));
-    inventory.addItem(std::move(mageStaff));
-    inventory.addItem(std::move(mageWand));
-    inventory.addItem(std::move(knightSword));
-    inventory.addItem(std::move(knightLance));
-    inventory.addItem(std::move(assassinDagger));
-    inventory.addItem(std::move(assassinBlade));
-    inventory.addItem(std::move(berserkerAxe));
-    inventory.addItem(std::move(berserkerClub));
-    inventory.addItem(std::move(paladinMace));
-    inventory.addItem(std::move(paladinHammer));
-    inventory.addItem(std::move(rangerBow));
-    inventory.addItem(std::move(rangerCrossbow));
-    inventory.addItem(std::move(necromancerStaff));
-    inventory.addItem(std::move(necromancerDagger));
-
-    // Armures spécifiques pour chaque classe (2 armures par classe)
-    auto warriorArmor1 = std::make_unique<Armor>("Armure de Cuir", 10, Element::None);
-    auto warriorArmor2 = std::make_unique<Armor>("Armure de Feu", 15, Element::Fire);
-    auto mageArmor1 = std::make_unique<Armor>("Robe de Glace", 8, Element::Ice);
-    auto mageArmor2 = std::make_unique<Armor>("Robe de Feu", 8, Element::Fire);
-    auto knightArmor1 = std::make_unique<Armor>("Armure Lourde", 20, Element::None);
-    auto knightArmor2 = std::make_unique<Armor>("Armure Divine", 25, Element::Divine);
-    auto assassinArmor1 = std::make_unique<Armor>("Armure Legere", 10, Element::Dark);
-    auto assassinArmor2 = std::make_unique<Armor>("Armure Empoisonnee", 12, Element::Poison);
-    auto berserkerArmor1 = std::make_unique<Armor>("Armure de Rage", 12, Element::Fire);
-    auto berserkerArmor2 = std::make_unique<Armor>("Armure de Cuir", 10, Element::None);
-    auto paladinArmor1 = std::make_unique<Armor>("Armure Sacrée", 18, Element::Divine);
-    auto paladinArmor2 = std::make_unique<Armor>("Armure Benie", 20, Element::Divine);
-    auto rangerArmor1 = std::make_unique<Armor>("Armure de Cuir", 12, Element::None);
-    auto rangerArmor2 = std::make_unique<Armor>("Armure de Glace", 14, Element::Ice);
-    auto necromancerArmor1 = std::make_unique<Armor>("Robe des Ombres", 8, Element::Dark);
-    auto necromancerArmor2 = std::make_unique<Armor>("Robe Empoisonne", 10, Element::Poison);
-
-    // Ajouter les armures à l'inventaire avec std::move
-    inventory.addItem(std::move(warriorArmor1));
-    inventory.addItem(std::move(warriorArmor2));
-    inventory.addItem(std::move(mageArmor1));
-    inventory.addItem(std::move(mageArmor2));
-    inventory.addItem(std::move(knightArmor1));
-    inventory.addItem(std::move(knightArmor2));
-    inventory.addItem(std::move(assassinArmor1));
-    inventory.addItem(std::move(assassinArmor2));
-    inventory.addItem(std::move(berserkerArmor1));
-    inventory.addItem(std::move(berserkerArmor2));
-    inventory.addItem(std::move(paladinArmor1));
-    inventory.addItem(std::move(paladinArmor2));
-    inventory.addItem(std::move(rangerArmor1));
-    inventory.addItem(std::move(rangerArmor2));
-    inventory.addItem(std::move(necromancerArmor1));
-    inventory.addItem(std::move(necromancerArmor2));
-
-    // Map pour associer les classes et leurs armes
-    std::map<ClassType, std::vector<Weapon*>> classWeapons = {
-        {ClassType::Warrior, {dynamic_cast<Weapon*>(inventory.getItem(0)), dynamic_cast<Weapon*>(inventory.getItem(1))}},
-        {ClassType::Mage, {dynamic_cast<Weapon*>(inventory.getItem(2)), dynamic_cast<Weapon*>(inventory.getItem(3))}},
-        {ClassType::Knight, {dynamic_cast<Weapon*>(inventory.getItem(4)), dynamic_cast<Weapon*>(inventory.getItem(5))}},
-        {ClassType::Assassin, {dynamic_cast<Weapon*>(inventory.getItem(6)), dynamic_cast<Weapon*>(inventory.getItem(7))}},
-        {ClassType::Berserker, {dynamic_cast<Weapon*>(inventory.getItem(8)), dynamic_cast<Weapon*>(inventory.getItem(9))}},
-        {ClassType::Paladin, {dynamic_cast<Weapon*>(inventory.getItem(10)), dynamic_cast<Weapon*>(inventory.getItem(11))}},
-        {ClassType::Ranger, {dynamic_cast<Weapon*>(inventory.getItem(12)), dynamic_cast<Weapon*>(inventory.getItem(13))}},
-        {ClassType::Necromancer, {dynamic_cast<Weapon*>(inventory.getItem(14)), dynamic_cast<Weapon*>(inventory.getItem(15))}}
-    };
-
-    // Map pour associer les classes et leurs armures
-    std::map<ClassType, std::vector<Armor*>> classArmors = {
-        {ClassType::Warrior, {dynamic_cast<Armor*>(inventory.getItem(16)), dynamic_cast<Armor*>(inventory.getItem(17))}},
-        {ClassType::Mage, {dynamic_cast<Armor*>(inventory.getItem(18)), dynamic_cast<Armor*>(inventory.getItem(19))}},
-        {ClassType::Knight, {dynamic_cast<Armor*>(inventory.getItem(20)), dynamic_cast<Armor*>(inventory.getItem(21))}},
-        {ClassType::Assassin, {dynamic_cast<Armor*>(inventory.getItem(22)), dynamic_cast<Armor*>(inventory.getItem(23))}},
-        {ClassType::Berserker, {dynamic_cast<Armor*>(inventory.getItem(24)), dynamic_cast<Armor*>(inventory.getItem(25))}},
-        {ClassType::Paladin, {dynamic_cast<Armor*>(inventory.getItem(26)), dynamic_cast<Armor*>(inventory.getItem(27))}},
-        {ClassType::Ranger, {dynamic_cast<Armor*>(inventory.getItem(28)), dynamic_cast<Armor*>(inventory.getItem(29))}},
-        {ClassType::Necromancer, {dynamic_cast<Armor*>(inventory.getItem(30)), dynamic_cast<Armor*>(inventory.getItem(31))}}
-    };
+    // Charger l'inventaire depuis le fichier InventoryList.txt
+    inventory.loadInventoryFromFile("InventoryList.txt");
 
     // Choisir deux classes aléatoirement
     ClassType classType1 = getRandomClassType();
@@ -145,49 +126,12 @@ int main() {
     Character character1("Personnage 1", classType1);
     Character character2("Personnage 2", classType2);
 
-    // Associer les armes et armures aux personnages en fonction de leur classe
-    character1.equipWeapon(classWeapons[classType1][0]);  // Première arme de la classe
-    character1.equipArmor(classArmors[classType1][0]);    // Première armure de la classe
-    character2.equipWeapon(classWeapons[classType2][1]);  // Deuxième arme de la classe
-    character2.equipArmor(classArmors[classType2][1]);    // Deuxième armure de la classe
+    // Charger leurs inventaires
+    character1.getInventory().loadInventoryFromFile("InventoryList.txt");
+    character2.getInventory().loadInventoryFromFile("InventoryList.txt");
 
-    // Menu avant le combat
-    int action = 0;
-    do {
-        std::cout << "\n=== MENU PRINCIPAL ===\n";
-        std::cout << "1. Afficher l'inventaire du personnage 1\n";
-        std::cout << "2. Lancer le combat\n";
-        std::cout << "Choisissez une option: ";
-        std::cin >> action;
-
-        if (action == 1) {
-            showInventoryMenu(character1);
-        }
-        else if (action != 2) {
-            std::cout << "Option non valide.\n";
-        }
-
-    } while (action != 2);
-
-    // Combat
-    Combat::engage(character1, character2);
-
-    // Menu après le combat
-    do {
-        std::cout << "\n=== MENU POST-COMBAT ===\n";
-        std::cout << "1. Afficher l'inventaire du personnage 1\n";
-        std::cout << "2. Quitter\n";
-        std::cout << "Choisissez une option: ";
-        std::cin >> action;
-
-        if (action == 1) {
-            showInventoryMenu(character1);
-        }
-        else if (action != 2) {
-            std::cout << "Option non valide.\n";
-        }
-
-    } while (action != 2);
+    // Afficher le menu principal
+    showMainMenu(character1, character2);
 
     return 0;
 }

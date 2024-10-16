@@ -78,4 +78,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="InventoryList.txt" />
+  </ItemGroup>
 </Project>

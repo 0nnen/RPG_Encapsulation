@@ -41,6 +41,7 @@ public:
     Character(std::string name, ClassType classType);
 
     // Getters and setters for encapsulation
+    Inventory& getInventory() { return inventory; }
     int getHealth() const { return health; };
     int getMaxHealth() const { return maxHealth; };
     int getStamina() const { return stamina; };
