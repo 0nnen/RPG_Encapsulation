@@ -103,6 +103,14 @@ void InventoryLib::sortByType() {
         });
 }
 
+void InventoryLib::sortByElement() {
+    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        return static_cast<int>(a->getElement()) < static_cast<int>(b->getElement());
+        });
+}
+
+
+
 std::vector<Item*> InventoryLib::getItems() const {
     std::vector<Item*> result; 
     for (const auto& item : items) {
