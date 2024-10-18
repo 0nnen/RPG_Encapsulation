@@ -4,15 +4,14 @@
 
 class Armor : public Item {
 private:
-    int defense;  // Défense physique de l'armure
-    Element element;  // Élément de résistance de l'armure
+    int defense;  
+    Element element;  
 
 public:
     Armor(std::string name, int defense, Element element = Element::None)
         : Item(name), defense(defense), element(element) {}
 
-    // Redéfinition de getAttack()
-    int getAttack() const override { return 0; }  // L'armure n'a pas d'attaque
+    int getAttack() const override { return 0; }  
 
     int getDefense() const override { return defense; }
     Element getElement() const override { return element; }

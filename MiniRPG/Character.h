@@ -36,17 +36,17 @@ private:
     Weapon* mainWeapon;
     Armor* armor;
     std::vector<Skill> skills;
-    InventoryLib inventory;  // Changez Inventory en InventoryLib
+    InventoryLib inventory;  
 
 public:
     Character(std::string name, ClassType classType);
 
     // Getters and setters for encapsulation
-    InventoryLib& getInventory() { return inventory; }  // Changez le type de retour
+    InventoryLib& getInventory() { return inventory; }  
     int getHealth() const { return health; }
     int getMaxHealth() const { return maxHealth; }
     int getStamina() const { return stamina; }
-    int getMaxStamina() const { return maxStamina; }  // Corrigé de maxHealth à maxStamina
+    int getMaxStamina() const { return maxStamina; }  
     int getDefense() const { return defense + defenseBuff; }
     int getDefenseBuff() const { return defenseBuff; }
     int getAttackBuff() const { return attackBuff; }

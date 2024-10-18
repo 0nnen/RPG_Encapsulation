@@ -17,7 +17,6 @@ public:
     void addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems);
     size_t getSize() const { return items.size(); }
 
-    // Supprimer, rechercher et trier les méthodes existantes
     bool removeItem(const std::string& itemName);
     std::vector<Item*> searchByStat(int minStat, int maxStat) const;
     void sortByType();

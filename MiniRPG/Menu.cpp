@@ -13,19 +13,19 @@ void Menu::searchItems(InventoryLib& inventory) {
 
     while (true) {
         std::cout << "\nFaites votre choix:\n";
-        std::cout << "1. Nom (laisser vide pour ignorer)\n";
-        std::cout << "2. Type (laisser vide pour ignorer)\n";
-        std::cout << "3. Statistiques d'attaque min (0 pour ignorer)\n";
-        std::cout << "4. Statistiques d'attaque max (0 pour ignorer)\n";
-        std::cout << "5. Statistiques de défense min (0 pour ignorer)\n";
-        std::cout << "6. Statistiques de défense max (0 pour ignorer)\n";
-        std::cout << "7. Élément (laisser vide pour ignorer)\n";
+        std::cout << "1. Nom \n";
+        std::cout << "2. Type \n";
+        std::cout << "3. Statistiques d'attaque min \n";
+        std::cout << "4. Statistiques d'attaque max \n";
+        std::cout << "5. Statistiques de défense min \n";
+        std::cout << "6. Statistiques de défense max \n";
+        std::cout << "7. Element \n";
         std::cout << "8. Lancer la recherche\n";
-        std::cout << "9. Quitter\n";  // Option pour quitter le menu
+        std::cout << "9. Quitter\n";  
         std::cout << "Entrez votre choix: ";
 
         std::cin >> choice;
-        std::cin.ignore(); // Ignorer le retour à la ligne après l'entrée
+        std::cin.ignore(); 
 
         switch (choice) {
         case 1:
@@ -59,10 +59,8 @@ void Menu::searchItems(InventoryLib& inventory) {
         case 8:
             std::cout << "Lancer la recherche...\n";
             {
-                // Appeler la méthode de recherche de l'inventaire ici
                 auto results = inventory.searchByCriteria(name, type, minAttack, maxAttack, minDefense, maxDefense, element);
 
-                // Afficher les résultats
                 std::cout << "Résultats de la recherche:\n";
                 for (const auto& item : results) {
                     std::cout << item->getName() << " (" << item->getType() << ")\n";
@@ -71,7 +69,7 @@ void Menu::searchItems(InventoryLib& inventory) {
             break;
         case 9:
             std::cout << "Quitter la recherche.\n";
-            return; // Sortir de la fonction
+            return; 
         default:
             std::cout << "Choix invalide, veuillez réessayer.\n";
             break;

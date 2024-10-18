@@ -13,11 +13,9 @@ public:
     Weapon(std::string name, int damage, bool isTwoHanded, Element element = Element::None)
         : Item(name), damage(damage), isTwoHanded(isTwoHanded), element(element) {}
 
-    // Renaming this method to getDamage to match Character.cpp
-    int getDamage() const { return damage; } // Cela reste pour l'utilisation que vous en faites
+    int getDamage() const { return damage; } 
 
-    // Redéfinition de getAttack()
-    int getAttack() const override { return damage; }  // Ajoutez cette ligne pour implémenter la méthode pure
+    int getAttack() const override { return damage; }  
 
     int getDefense() const override { return 0; }
 

@@ -68,12 +68,11 @@ void InventoryLib::displayInventory() const {
 
 void InventoryLib::addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems) {
     for (const auto& item : allItems) {
-        // Ajoute une copie de l'objet
         if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
-            addItem(std::make_unique<Weapon>(*weapon));  // Copie l'objet Weapon
+            addItem(std::make_unique<Weapon>(*weapon)); 
         }
         else if (auto armor = dynamic_cast<Armor*>(item.get())) {
-            addItem(std::make_unique<Armor>(*armor));  // Copie l'objet Armor
+            addItem(std::make_unique<Armor>(*armor)); 
         }
     }
 }
@@ -105,9 +104,9 @@ void InventoryLib::sortByType() {
 }
 
 std::vector<Item*> InventoryLib::getItems() const {
-    std::vector<Item*> result; // Utilisation de Item*
+    std::vector<Item*> result; 
     for (const auto& item : items) {
-        result.push_back(item.get());  // Ajout des pointeurs
+        result.push_back(item.get());  
     }
     return result;
 }
@@ -130,15 +129,13 @@ std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const
     for (const auto& item : items) {
         bool matches = true;
 
-        // Vérification des critères de nom et de type
-        if (!name.empty() && item->getName() != name) {
-            matches = false;
+        if (!name.empty() && item->getName().find(name) == std::string::npos) {
+            matches = false; 
         }
         if (!type.empty() && item->getType() != type) {
             matches = false;
         }
 
-        // Utilisation de dynamic_cast pour vérifier si l'item est un Weapon ou Armor
         if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
             if ((minAttack > 0 && weapon->getAttack() < minAttack) ||
                 (maxAttack > 0 && weapon->getAttack() > maxAttack)) {
@@ -152,7 +149,6 @@ std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const
             }
         }
 
-        // Vérification de l'élément
         if (!element.empty() && item->getElement() != fromString(element)) {
             matches = false;
         }
