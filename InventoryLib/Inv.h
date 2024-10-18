@@ -1,29 +1,30 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include <memory>
 #include <string>
 #include "Item.h"
 
 class InventoryLib {
-public:
-    // Ajouter un objet à l'inventaire
-    void addItem(std::unique_ptr<Item> item);
-
-    // Supprimer un objet de l'inventaire par nom
-    bool removeItem(const std::string& itemName);
-
-    // Rechercher des objets par statistiques (ex: meilleure attaque)
-    std::vector<Item*> searchByStat(int minStat, int maxStat) const;
-
-    // Trier les objets par type (ex: Weapon, Armor)
-    void sortByType();
-
-    // Obtenir tous les objets (par exemple, pour les ajouter à Inventory)
-    std::vector<Item*> getItems() const;  
-
-    // Afficher les objets
-    void displayItems() const;
-
 private:
     std::vector<std::unique_ptr<Item>> items;
+
+public:
+    void addItem(std::unique_ptr<Item> item);
+    Item* getItem(int index);
+    void displayInventoryByType(const std::string& type) const;
+    void displayInventory() const;
+    void addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems);
+    size_t getSize() const { return items.size(); }
+
+    // Supprimer, rechercher et trier les méthodes existantes
+    bool removeItem(const std::string& itemName);
+    std::vector<Item*> searchByStat(int minStat, int maxStat) const;
+    void sortByType();
+    std::vector<Item*> getItems() const;
+    void displayItems() const;
+    std::vector<Item*> searchByCriteria(const std::string& name, const std::string& type,
+        int minAttack, int maxAttack,
+        int minDefense, int maxDefense,
+        const std::string& element) const;
 };

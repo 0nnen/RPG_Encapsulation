@@ -5,8 +5,9 @@
 #include "Weapon.h"
 #include "Armor.h"
 #include "Skill.h"
-#include "Inventory.h"
 #include "StatusEffect.h"
+#include "Inv.h"  
+
 
 enum class ClassType {
     Warrior,
@@ -35,24 +36,24 @@ private:
     Weapon* mainWeapon;
     Armor* armor;
     std::vector<Skill> skills;
-    Inventory inventory;
+    InventoryLib inventory;  // Changez Inventory en InventoryLib
 
 public:
     Character(std::string name, ClassType classType);
 
     // Getters and setters for encapsulation
-    Inventory& getInventory() { return inventory; }
-    int getHealth() const { return health; };
-    int getMaxHealth() const { return maxHealth; };
-    int getStamina() const { return stamina; };
-    int getMaxStamina() const { return maxHealth; };
-    int getDefense() const { return defense + defenseBuff; };
-    int getDefenseBuff() const { return defenseBuff; };
-    int getAttackBuff() const { return attackBuff; };
-    int getEvadeChance() const { return evadeChance; };
-    std::vector<Skill> getSkills() const { return skills; };
+    InventoryLib& getInventory() { return inventory; }  // Changez le type de retour
+    int getHealth() const { return health; }
+    int getMaxHealth() const { return maxHealth; }
+    int getStamina() const { return stamina; }
+    int getMaxStamina() const { return maxStamina; }  // Corrigé de maxHealth à maxStamina
+    int getDefense() const { return defense + defenseBuff; }
+    int getDefenseBuff() const { return defenseBuff; }
+    int getAttackBuff() const { return attackBuff; }
+    int getEvadeChance() const { return evadeChance; }
+    std::vector<Skill> getSkills() const { return skills; }
     std::string getName() const { return name; }
-    ClassType getClassType() const { return classType; };
+    ClassType getClassType() const { return classType; }
     void setHealth(int health);
     void setStamina(int stamina);
 
@@ -77,11 +78,9 @@ public:
     StatusEffect getStatusEffectFromSynergy() const;
     void applyStatusEffect(StatusEffect statusEffect);
 
-
     // Display character info
     void displayCharacterInfo() const;
 
     static std::string getClassName(ClassType classType);
-
 
 };

@@ -4,9 +4,17 @@
 #include <iostream>
 #include "Weapon.h"
 #include "Armor.h"
+#include "Element.h"
 
 void InventoryLib::addItem(std::unique_ptr<Item> item) {
     items.push_back(std::move(item));
+}
+
+Item* InventoryLib::getItem(int index) {
+    if (index >= 0 && index < items.size()) {
+        return items[index].get();
+    }
+    return nullptr;
 }
 
 bool InventoryLib::removeItem(const std::string& itemName) {
@@ -21,12 +29,61 @@ bool InventoryLib::removeItem(const std::string& itemName) {
     return false;
 }
 
+void InventoryLib::displayInventoryByType(const std::string& type) const {
+    bool headerShown = false;
+
+    for (size_t i = 0; i < items.size(); ++i) {
+        const auto& item = items[i];
+        if (item->getType() == type) {
+            if (!headerShown) {
+                std::cout << "\n\t\t=== " << (type == "Weapon" ? "ARMES" : "ARMURES") << " ===\n";
+                headerShown = true;
+            }
+            std::cout << "ID: " << i << " - " << item->getName() << " (" << item->getType() << ")\n";
+        }
+    }
+}
+void InventoryLib::displayInventory() const {
+    bool weaponsShown = false;
+    bool armorsShown = false;
+    bool potionsShown = false;
+
+    for (size_t i = 0; i < items.size(); ++i) {
+        const auto& item = items[i];
+        if (item->getType() == "Weapon" && !weaponsShown) {
+            std::cout << "\n\t\t=== ARMES ===\n";
+            weaponsShown = true;
+        }
+        if (item->getType() == "Armor" && !armorsShown) {
+            std::cout << "\n\t\t=== ARMURES ===\n";
+            armorsShown = true;
+        }
+        if (item->getType() == "Potion" && !potionsShown) {
+            std::cout << "\n=== POTIONS ===\n";
+            potionsShown = true;
+        }
+        std::cout << "ID: " << i << "\t" << item->getName() << " (" << item->getType() << ")\n";
+    }
+}
+
+void InventoryLib::addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems) {
+    for (const auto& item : allItems) {
+        // Ajoute une copie de l'objet
+        if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+            addItem(std::make_unique<Weapon>(*weapon));  // Copie l'objet Weapon
+        }
+        else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+            addItem(std::make_unique<Armor>(*armor));  // Copie l'objet Armor
+        }
+    }
+}
+
 std::vector<Item*> InventoryLib::searchByStat(int minStat, int maxStat) const {
     std::vector<Item*> result;
 
     for (const auto& item : items) {
         if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
-            if (weapon->getDamage() >= minStat && weapon->getDamage() <= maxStat) {
+            if (weapon->getAttack() >= minStat && weapon->getAttack() <= maxStat) { 
                 result.push_back(weapon);
             }
         }
@@ -39,6 +96,7 @@ std::vector<Item*> InventoryLib::searchByStat(int minStat, int maxStat) const {
 
     return result;
 }
+
 
 void InventoryLib::sortByType() {
     std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
@@ -62,3 +120,47 @@ void InventoryLib::displayItems() const {
     }
 }
 
+
+std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const std::string& type,
+    int minAttack, int maxAttack,
+    int minDefense, int maxDefense,
+    const std::string& element) const {
+    std::vector<Item*> results;
+
+    for (const auto& item : items) {
+        bool matches = true;
+
+        // Vérification des critères de nom et de type
+        if (!name.empty() && item->getName() != name) {
+            matches = false;
+        }
+        if (!type.empty() && item->getType() != type) {
+            matches = false;
+        }
+
+        // Utilisation de dynamic_cast pour vérifier si l'item est un Weapon ou Armor
+        if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+            if ((minAttack > 0 && weapon->getAttack() < minAttack) ||
+                (maxAttack > 0 && weapon->getAttack() > maxAttack)) {
+                matches = false;
+            }
+        }
+        else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+            if ((minDefense > 0 && armor->getDefense() < minDefense) ||
+                (maxDefense > 0 && armor->getDefense() > maxDefense)) {
+                matches = false;
+            }
+        }
+
+        // Vérification de l'élément
+        if (!element.empty() && item->getElement() != fromString(element)) {
+            matches = false;
+        }
+
+        if (matches) {
+            results.push_back(item.get());
+        }
+    }
+
+    return results;
+}

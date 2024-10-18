@@ -1,28 +1,7 @@
-#pragma once
+#pragma once 
 #include "Item.h"
 #include <iostream>
-
-enum class Element {
-    None,
-    Fire,
-    Ice,
-    Poison,
-    Divine,
-    Dark
-};
-
-// Surcharge de l'opérateur << pour Element
-inline std::ostream& operator<<(std::ostream& os, const Element& element) {
-    switch (element) {
-    case Element::None: os << "Aucun"; break;
-    case Element::Fire: os << "Feu"; break;
-    case Element::Ice: os << "Glace"; break;
-    case Element::Poison: os << "Poison"; break;
-    case Element::Divine: os << "Divin"; break;
-    case Element::Dark: os << "Tenebres"; break;
-    }
-    return os;
-}
+#include "Element.h" 
 
 class Weapon : public Item {
 private:
@@ -34,9 +13,16 @@ public:
     Weapon(std::string name, int damage, bool isTwoHanded, Element element = Element::None)
         : Item(name), damage(damage), isTwoHanded(isTwoHanded), element(element) {}
 
-    int getDamage() const { return damage; };
-    bool getIsTwoHanded() const { return isTwoHanded; };
-    Element getElement() const { return element; }
-    std::string getName() const { return name; };
+    // Renaming this method to getDamage to match Character.cpp
+    int getDamage() const { return damage; } // Cela reste pour l'utilisation que vous en faites
+
+    // Redéfinition de getAttack()
+    int getAttack() const override { return damage; }  // Ajoutez cette ligne pour implémenter la méthode pure
+
+    int getDefense() const override { return 0; }
+
+    bool getIsTwoHanded() const { return isTwoHanded; }
+    Element getElement() const override { return element; }
+
     std::string getType() const override { return "Weapon"; }
 };

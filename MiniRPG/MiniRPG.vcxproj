@@ -156,6 +156,7 @@
     <ClInclude Include="Armor.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Combat.h" />
+    <ClInclude Include="Element.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Menu.h" />

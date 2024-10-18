@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Element.h" 
 
 class Item {
 protected:
@@ -7,8 +8,11 @@ protected:
 
 public:
     Item(std::string name) : name(name) {}
-    virtual ~Item() {}
 
     virtual std::string getName() const { return name; }
-    virtual std::string getType() const = 0;  // Méthode virtuelle pour obtenir le type de l'objet (arme, armure, potion)
+    virtual std::string getType() const = 0;
+
+    virtual int getAttack() const = 0;
+    virtual int getDefense() const = 0;
+    virtual Element getElement() const = 0;
 };

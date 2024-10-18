@@ -25,7 +25,7 @@ int main() {
     character2.getInventory().addItemsFromList(allItems);
 
     // Afficher le menu principal
-    Menu::showMainMenu(character1, character2);
+    Menu::showMainMenu(character1, character2); // Assurez-vous que showMainMenu est statique
 
     return 0;
 }

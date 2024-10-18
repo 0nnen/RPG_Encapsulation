@@ -1,6 +1,83 @@
 #include "Menu.h"
 #include <iostream>
 #include "Combat.h"
+#include "Inv.h"
+#include <string>
+
+void Menu::searchItems(InventoryLib& inventory) {
+    std::string name, type, element;
+    int minAttack = 0, maxAttack = 0, minDefense = 0, maxDefense = 0;
+    int choice = 0;
+
+    std::cout << "Recherche d'objets:\n";
+
+    while (true) {
+        std::cout << "\nFaites votre choix:\n";
+        std::cout << "1. Nom (laisser vide pour ignorer)\n";
+        std::cout << "2. Type (laisser vide pour ignorer)\n";
+        std::cout << "3. Statistiques d'attaque min (0 pour ignorer)\n";
+        std::cout << "4. Statistiques d'attaque max (0 pour ignorer)\n";
+        std::cout << "5. Statistiques de défense min (0 pour ignorer)\n";
+        std::cout << "6. Statistiques de défense max (0 pour ignorer)\n";
+        std::cout << "7. Élément (laisser vide pour ignorer)\n";
+        std::cout << "8. Lancer la recherche\n";
+        std::cout << "9. Quitter\n";  // Option pour quitter le menu
+        std::cout << "Entrez votre choix: ";
+
+        std::cin >> choice;
+        std::cin.ignore(); // Ignorer le retour à la ligne après l'entrée
+
+        switch (choice) {
+        case 1:
+            std::cout << "Entrez le nom: ";
+            std::getline(std::cin, name);
+            break;
+        case 2:
+            std::cout << "Entrez le type: ";
+            std::getline(std::cin, type);
+            break;
+        case 3:
+            std::cout << "Entrez les statistiques d'attaque min: ";
+            std::cin >> minAttack;
+            break;
+        case 4:
+            std::cout << "Entrez les statistiques d'attaque max: ";
+            std::cin >> maxAttack;
+            break;
+        case 5:
+            std::cout << "Entrez les statistiques de défense min: ";
+            std::cin >> minDefense;
+            break;
+        case 6:
+            std::cout << "Entrez les statistiques de défense max: ";
+            std::cin >> maxDefense;
+            break;
+        case 7:
+            std::cout << "Entrez l'élément: ";
+            std::getline(std::cin, element);
+            break;
+        case 8:
+            std::cout << "Lancer la recherche...\n";
+            {
+                // Appeler la méthode de recherche de l'inventaire ici
+                auto results = inventory.searchByCriteria(name, type, minAttack, maxAttack, minDefense, maxDefense, element);
+
+                // Afficher les résultats
+                std::cout << "Résultats de la recherche:\n";
+                for (const auto& item : results) {
+                    std::cout << item->getName() << " (" << item->getType() << ")\n";
+                }
+            }
+            break;
+        case 9:
+            std::cout << "Quitter la recherche.\n";
+            return; // Sortir de la fonction
+        default:
+            std::cout << "Choix invalide, veuillez réessayer.\n";
+            break;
+        }
+    }
+}
 
 void Menu::showCharacterMenu(Character& character) {
     int choice = 0;
@@ -10,7 +87,8 @@ void Menu::showCharacterMenu(Character& character) {
         std::cout << "2. Afficher les informations du personnage\n";
         std::cout << "3. Equiper une arme\n";
         std::cout << "4. Equiper une armure\n";
-        std::cout << "5. Retour\n";
+        std::cout << "5. Rechercher des objets\n";
+        std::cout << "6. Retour\n";
         std::cout << "\n\t\tChoisissez une option: ";
         std::cin >> choice;
 
@@ -45,12 +123,16 @@ void Menu::showCharacterMenu(Character& character) {
         }
         case 5:
             system("CLS");
+            searchItems(character.getInventory());
+            break;
+        case 6:
+            system("CLS");
             std::cout << "\n\t\tRetour au menu precedent...\n\n";
             break;
         default:
             std::cout << "\n\t\tOption non valide. Veuillez choisir a nouveau.\n";
         }
-    } while (choice != 5);
+    } while (choice != 6);
 }
 
 void Menu::showManageCharactersMenu(Character& character1, Character& character2) {

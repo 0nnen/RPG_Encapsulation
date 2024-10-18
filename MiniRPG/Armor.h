@@ -11,7 +11,10 @@ public:
     Armor(std::string name, int defense, Element element = Element::None)
         : Item(name), defense(defense), element(element) {}
 
-    int getDefense() const { return defense; };
-    Element getElement() const { return element; };
-    std::string getType() const override { return "Armor"; };
+    // Redéfinition de getAttack()
+    int getAttack() const override { return 0; }  // L'armure n'a pas d'attaque
+
+    int getDefense() const override { return defense; }
+    Element getElement() const override { return element; }
+    std::string getType() const override { return "Armor"; }
 };
