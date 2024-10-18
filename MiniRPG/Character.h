@@ -82,4 +82,6 @@ public:
     void displayCharacterInfo() const;
 
     static std::string getClassName(ClassType classType);
+
+
 };
