@@ -28,5 +28,4 @@ public:
         int minAttack, int maxAttack,
         int minDefense, int maxDefense,
         const std::string& element) const;
-    void resetSearch();
 };
