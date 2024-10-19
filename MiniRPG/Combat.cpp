@@ -8,7 +8,7 @@ ClassType getRandomClassType() {
 }
 
 void Combat::engage(Character& character1, Character& character2) {
-    // Vérification de la synergie élémentaire pour chaque personnage
+    // Verification de la synergie elementaire pour chaque personnage
     if (character1.hasElementalSynergy()) {
         std::cout << character1.getName() << " possede une synergie entre son arme et son armure (" << character1.getWeaponElement() << ")!\n";
     }
@@ -45,7 +45,7 @@ void Combat::engage(Character& character1, Character& character2) {
             character2.useSkill(character1, skillIndex);
         }
 
-        // Afficher la santé des personnages après le tour
+        // Afficher la sante des personnages après le tour
         std::cout << "\tºVie de " << character1.getName() << ": " << character1.getHealth() << "/" << character1.getMaxHealth() << "\n";
         std::cout << "\tºVie de " << character2.getName() << ": " << character2.getHealth() << "/" << character2.getMaxHealth() << "\n\n";
 

@@ -138,8 +138,14 @@ std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const
     for (const auto& item : items) {
         bool matches = true;
 
-        if (!name.empty() && item->getName().find(name) == std::string::npos) {
-            matches = false; 
+        if (!name.empty()) {
+            std::string itemNameLower = item->getName();
+            std::string searchNameLower = name;
+            std::transform(itemNameLower.begin(), itemNameLower.end(), itemNameLower.begin(), ::tolower);
+            std::transform(searchNameLower.begin(), searchNameLower.end(), searchNameLower.begin(), ::tolower);
+            if (itemNameLower.find(searchNameLower) == std::string::npos) {
+                matches = false;
+            }
         }
         if (!type.empty() && item->getType() != type) {
             matches = false;

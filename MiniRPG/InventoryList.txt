@@ -1,35 +1,35 @@
-# Format: Nom;Type;Statistiques (Attaque/Defense);Element
+# Format: Nom;Type;Statistiques (Attaque/Defense);Element;Poids;Rarete;Description
 
 # Armes
-Epee du Guerrier;Weapon;25;None
-Hache du Guerrier;Weapon;35;Fire
-Baton du Mage;Weapon;20;Ice
-Baguette du Mage;Weapon;15;Fire
-Epee du Chevalier;Weapon;30;None
-Lance du Chevalier;Weapon;40;Divine
-Dague de l'Assassin;Weapon;18;Poison
-Lame de l'Assassin;Weapon;25;Dark
-Hache du Berserker;Weapon;35;Fire
-Massue du Berserker;Weapon;30;None
-Masse du Paladin;Weapon;30;Divine
-Marteau du Paladin;Weapon;40;Divine
-Arc du Ranger;Weapon;20;None
-Arbalete du Ranger;Weapon;25;Ice
-Baton du Necromancien;Weapon;20;Dark
-Dague du Necromancien;Weapon;15;Poison
+Epee du Guerrier;Weapon;25;None;5;Common;Une epee standard pour les guerriers.
+Hache du Guerrier;Weapon;35;Fire;7;Uncommon;Une hache lourde et puissante avec un enchantement de feu.
+Baton du Mage;Weapon;20;Ice;3;Rare;Un baton magique infuse de glace.
+Baguette du Mage;Weapon;15;Fire;2;Common;Une baguette basique pour lancer des sorts de feu.
+Epee du Chevalier;Weapon;30;None;6;Rare;Une epee de haute qualite utilisee par les chevaliers.
+Lance du Chevalier;Weapon;40;Divine;8;Epic;Une lance divine utilisee par les guerriers sacres.
+Dague de l'Assassin;Weapon;18;Poison;1;Uncommon;Une dague empoisonnee parfaite pour les attaques furtives.
+Lame de l'Assassin;Weapon;25;Dark;3;Rare;Une lame sombre qui absorbe l'energie vitale de la cible.
+Hache du Berserker;Weapon;35;Fire;10;Rare;Une hache puissante utilisee par les berserkers, infusee de feu.
+Massue du Berserker;Weapon;30;None;9;Common;Une massue lourde utilisee pour infliger de gros degats.
+Masse du Paladin;Weapon;30;Divine;8;Uncommon;Une masse sacree utilisee par les paladins.
+Marteau du Paladin;Weapon;40;Divine;12;Epic;Un marteau divin capable de repousser les tenebres.
+Arc du Ranger;Weapon;20;None;4;Common;Un arc standard utilise par les rangers.
+Arbalete du Ranger;Weapon;25;Ice;6;Uncommon;Une arbalete legere avec des fleches glaciales.
+Baton du Necromancien;Weapon;20;Dark;3;Rare;Un baton canalise les forces sombres pour des sorts puissants.
+Dague du Necromancien;Weapon;15;Poison;2;Common;Une dague envenimee parfaite pour les rituels occultes.
 
 # Armures
-Armure de Cuir;Armor;10;None
-Armure de Feu;Armor;15;Fire
-Robe de Glace;Armor;8;Ice
-Robe de Feu;Armor;8;Fire
-Armure Lourde;Armor;20;None
-Armure Divine;Armor;25;Divine
-Armure Legere;Armor;10;Dark
-Armure Empoisonnee;Armor;12;Poison
-Armure de Rage;Armor;12;Fire
-Armure Sacree;Armor;18;Divine
-Armure Benie;Armor;20;Divine
-Armure de Glace;Armor;14;Ice
-Robe des Ombres;Armor;8;Dark
-Robe Empoisonnee;Armor;10;Poison
+Armure de Cuir;Armor;10;None;5;Common;Une armure legere en cuir offrant une protection basique.
+Armure de Feu;Armor;15;Fire;6;Uncommon;Une armure resistant aux attaques de feu.
+Robe de Glace;Armor;8;Ice;3;Rare;Une robe enchanteresse qui offre une resistance au froid.
+Robe de Feu;Armor;8;Fire;3;Rare;Une robe enchanteresse qui offre une resistance aux flammes.
+Armure Lourde;Armor;20;None;15;Common;Une armure lourde offrant une grande protection mais limitant la mobilite.
+Armure Divine;Armor;25;Divine;12;Epic;Une armure benie par les dieux, offre une protection sacree.
+Armure Legere;Armor;10;Dark;5;Uncommon;Une armure legere avec une aura sombre.
+Armure Empoisonnee;Armor;12;Poison;6;Rare;Une armure envenimee qui affaiblit ceux qui l'attaquent.
+Armure de Rage;Armor;12;Fire;8;Uncommon;Une armure qui augmente la force du porteur lorsqu'il est en colere.
+Armure Sacree;Armor;18;Divine;10;Epic;Une armure benie offrant une grande protection contre les forces obscures.
+Armure Benie;Armor;20;Divine;12;Epic;Une armure offrant une defense optimale aux paladins.
+Armure de Glace;Armor;14;Ice;9;Rare;Une armure qui reduit les degats des attaques glacees.
+Robe des Ombres;Armor;8;Dark;4;Rare;Une robe mysterieuse qui rend le porteur plus difficile a detecter.
+Robe Empoisonnee;Armor;10;Poison;3;Uncommon;Une robe envenimee pour des sortileges venimeux.

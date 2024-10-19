@@ -5,32 +5,32 @@ Character::Character(std::string name, ClassType classType)
     maxHealth(100), health(100), maxStamina(50), stamina(50), defense(0), defenseBuff(0),
     attackBuff(0), evadeChance(0), synergyDetected(false) {
 
-    // Les compétences sont définies selon la classe choisie
+    // Les competences sont definies selon la classe choisie
     switch (classType) {
     case ClassType::Warrior:
         addSkill(Skill("Trancher", 10, 20));                     // Attaque de base
         addSkill(Skill("Charge", 15, 25));                       // Attaque avec bonus de force
         addSkill(Skill("Coup Puissant", 20, 30));                // Attaque forte
-        addSkill(Skill("Cri de Guerre", 0, 10, false, false, false, true));  // Buff défense (valeur remplacée par 10)
+        addSkill(Skill("Cri de Guerre", 0, 10, false, false, false, true));  // Buff defense (valeur remplacee par 10)
         addSkill(Skill("Frappe Eclair", 25, 35));                // Attaque rapide
         addSkill(Skill("Tourbillon", 18, 20));                   // Attaque multiple
         break;
 
     case ClassType::Mage:
-        addSkill(Skill("Boule de Feu", 20, 30, true));           // Attaque élémentaire Feu
-        addSkill(Skill("Explosion de Glace", 20, 30, true));     // Attaque élémentaire Glace
-        addSkill(Skill("Choc Electrique", 15, 20, true));        // Attaque élémentaire Foudre
-        addSkill(Skill("Soin Magique", 25, 0, true, true));      // Soin (25 points de soins, remplacé dans "dégâts")
-        addSkill(Skill("Tempete Arcane", 30, 40, true));         // Dégâts en zone
-        addSkill(Skill("Mur de Glace", 15, 0, false, false, false, true));  // Buff défense (15 points de buff, remplacé dans "dégâts")
+        addSkill(Skill("Boule de Feu", 20, 30, true));           // Attaque elementaire Feu
+        addSkill(Skill("Explosion de Glace", 20, 30, true));     // Attaque elementaire Glace
+        addSkill(Skill("Choc Electrique", 15, 20, true));        // Attaque elementaire Foudre
+        addSkill(Skill("Soin Magique", 25, 0, true, true));      // Soin (25 points de soins, remplace dans "degats")
+        addSkill(Skill("Tempete Arcane", 30, 40, true));         // Degats en zone
+        addSkill(Skill("Mur de Glace", 15, 0, false, false, false, true));  // Buff defense (15 points de buff, remplace dans "degats")
         break;
 
     case ClassType::Knight:
-        addSkill(Skill("Coup de Bouclier", 10, 15));             // Attaque avec bonus de défense
-        addSkill(Skill("Posture Defensive", 20, 0, false, false, false, true));  // Buff défense (20 points)
+        addSkill(Skill("Coup de Bouclier", 10, 15));             // Attaque avec bonus de defense
+        addSkill(Skill("Posture Defensive", 20, 0, false, false, false, true));  // Buff defense (20 points)
         addSkill(Skill("Lame Divine", 25, 35, true));            // Attaque divine
         addSkill(Skill("Charge Du Chevalier", 25, 0, false, false, true, false)); // Buff attaque (25 points)
-        addSkill(Skill("Barriere Divine", 25, 0, false, false, false, true));  // Buff défense (25 points)
+        addSkill(Skill("Barriere Divine", 25, 0, false, false, false, true));  // Buff defense (25 points)
         addSkill(Skill("Frappe Juste", 30, 40));                 // Attaque critique
         break;
 
@@ -53,11 +53,11 @@ Character::Character(std::string name, ClassType classType)
         break;
 
     case ClassType::Paladin:
-        addSkill(Skill("Coup Sacre", 15, 20, true));             // Attaque élémentaire divine
-        addSkill(Skill("Bouclier Divin", 20, 0, false, false, false, true));   // Buff défense (20 points)
+        addSkill(Skill("Coup Sacre", 15, 20, true));             // Attaque elementaire divine
+        addSkill(Skill("Bouclier Divin", 20, 0, false, false, false, true));   // Buff defense (20 points)
         addSkill(Skill("Soin Divin", 25, 0, true, true));        // Soin (25 points)
-        addSkill(Skill("Frappe Celeste", 25, 30, true));         // Attaque élémentaire
-        addSkill(Skill("Protection Divine", 30, 0, false, false, false, true)); // Bouclier (30 points de défense)
+        addSkill(Skill("Frappe Celeste", 25, 30, true));         // Attaque elementaire
+        addSkill(Skill("Protection Divine", 30, 0, false, false, false, true)); // Bouclier (30 points de defense)
         addSkill(Skill("Jugement Divin", 35, 45, true));         // Attaque divine puissante
         break;
 
@@ -71,7 +71,7 @@ Character::Character(std::string name, ClassType classType)
         break;
 
     case ClassType::Necromancer:
-        addSkill(Skill("Eclair Sombre", 20, 25, true));          // Attaque élémentaire
+        addSkill(Skill("Eclair Sombre", 20, 25, true));          // Attaque elementaire
         addSkill(Skill("Drain de Vie", 30, 0, true, true));      // Vol de vie (30 points)
         addSkill(Skill("Explosion de Cadavres", 30, 40, true));  // Attaque en zone
         addSkill(Skill("Siphon d'Ame", 20, 0, true, true));      // Buff de vie (20 points)
@@ -119,18 +119,18 @@ void Character::equipArmor(Armor* armor) {
 }
 
 void Character::takeDamage(int damage) {
-    // Vérifie si le personnage esquive l'attaque
+    // Verifie si le personnage esquive l'attaque
     int chance = rand() % 100;
     if (chance < evadeChance) {
         std::cout << name << " a esquive l'attaque !\n";
-        return;  // Aucun dégât n'est subi
+        return;  // Aucun degat n'est subi
     }
 
-    // Calcul de la défense totale avec le buff de défense
+    // Calcul de la defense totale avec le buff de defense
     int totalDefense = defense + defenseBuff;
     int damageReduced = std::max(0, damage - totalDefense);
 
-    // Mise à jour de la vie après réduction des dégâts
+    // Mise à jour de la vie après reduction des degats
     health -= damageReduced;
     if (health < 0) health = 0;
 
@@ -155,7 +155,7 @@ void Character::useSkill(Character& opponent, int skillIndex) {
                     << " et se soigne de " << skill.getDamage() << " points de vie.\n";
             }
             else if (skill.getIsBuffDefense()) {
-                increaseDefense(skill.getDamage()); // Buff de défense
+                increaseDefense(skill.getDamage()); // Buff de defense
                 std::cout << getClassName(classType) << " utilise " << skill.getName()
                     << " et augmente sa defense de " << skill.getDamage() << " points.\n";
             }
@@ -165,7 +165,7 @@ void Character::useSkill(Character& opponent, int skillIndex) {
                     << " et augmente son attaque de " << skill.getDamage() << " points.\n";
             }
             else {
-                opponent.takeDamage(skill.getDamage()); // Dégâts d'attaque
+                opponent.takeDamage(skill.getDamage()); // Degats d'attaque
                 std::cout << getClassName(classType) << " utilise " << skill.getName()
                     << " contre " << opponent.getName() << " et inflige "
                     << skill.getDamage() << " points de degats.\n";
@@ -183,13 +183,13 @@ void Character::attack(Character& opponent) {
         int damage = mainWeapon->getDamage() + attackBuff;
         std::cout << getClassName(classType) << " attaque " << opponent.getName() << " avec " << damage << " degats.\n";
 
-        // Vérification de la synergie
+        // Verification de la synergie
         if (hasElementalSynergy() && !synergyDetected) {
             synergyDetected = true;
             std::cout << "\n\t" << name << " / " << getClassName(classType) << " a une synergie elementaire avec son equipement (" << mainWeapon->getElement() << ")!\n";
         }
 
-        // 30% de chance d'appliquer des dégâts élémentaires
+        // 30% de chance d'appliquer des degats elementaires
         int chance = rand() % 100;
         if (hasElementalSynergy() && chance < 30) {
             std::cout << "Effet elementaire active pour " << name << " ! Degats supplementaires lies a l'element : " << mainWeapon->getElement() << "\n";
@@ -219,7 +219,7 @@ void Character::increaseEvadeChance(int amount) {
 }
 
 StatusEffect Character::getStatusEffectFromSynergy() const {
-    // Si l'élément de l'arme et de l'armure correspond, appliquer l'effet de statut
+    // Si l'element de l'arme et de l'armure correspond, appliquer l'effet de statut
     if (mainWeapon && armor && mainWeapon->getElement() == armor->getElement()) {
         switch (mainWeapon->getElement()) {
         case Element::Fire: return StatusEffect(StatusEffectType::Enflamme, 3);
@@ -242,12 +242,12 @@ void Character::applyStatusEffect(StatusEffect effect) {
 }
 
 bool Character::hasElementalSynergy() const {
-    // Vérifie que les deux équipements existent et qu'ils ont le même élément
+    // Verifie que les deux equipements existent et qu'ils ont le même element
     if (mainWeapon && armor) {
         Element weaponElement = mainWeapon->getElement();
         Element armorElement = armor->getElement();
 
-        // Assure que ni l'arme ni l'armure ne sont de l'élément "None"
+        // Assure que ni l'arme ni l'armure ne sont de l'element "None"
         if (weaponElement != Element::None && armorElement != Element::None) {
             return weaponElement == armorElement;
         }
@@ -259,7 +259,7 @@ Element Character::getWeaponElement() const {
     if (mainWeapon) {
         return mainWeapon->getElement();
     }
-    return Element::None;  // Aucun élément si pas d'arme
+    return Element::None;  // Aucun element si pas d'arme
 }
 
 void Character::displayCharacterInfo() const {
@@ -267,7 +267,7 @@ void Character::displayCharacterInfo() const {
     std::cout << "Vie: " << health << "/" << maxHealth << "\n";
     std::cout << "Endurance: " << stamina << "/" << maxStamina << "\n";
 
-    // Afficher l'arme équipée
+    // Afficher l'arme equipee
     if (mainWeapon) {
         std::cout << "Arme: " << mainWeapon->getName() << " (Degats: " << mainWeapon->getDamage()
             << ", Element: " << mainWeapon->getElement() << ")\n";
@@ -276,7 +276,7 @@ void Character::displayCharacterInfo() const {
         std::cout << "Aucune arme equipee\n";
     }
 
-    // Afficher l'armure et la défense avec le buff
+    // Afficher l'armure et la defense avec le buff
     if (armor) {
         std::cout << "Armure: " << armor->getName() << " (Defense: " << armor->getDefense()
             << ", Element: " << armor->getElement() << ")\n";

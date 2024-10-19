@@ -14,7 +14,7 @@ enum class StatusEffectType {
 class StatusEffect {
 private:
     StatusEffectType effectType;
-    int duration; // Durée en tours
+    int duration; // Duree en tours
 
 public:
     StatusEffect(StatusEffectType effectType = StatusEffectType::None, int duration = 0);

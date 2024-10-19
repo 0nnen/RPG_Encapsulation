@@ -11,11 +11,11 @@ int main() {
 
     std::vector<std::unique_ptr<Item>> allItems = ParsingLib::parseInventoryFile("InventoryList.txt");
 
-    // Choisir deux classes aléatoirement
+    // Choisir deux classes aleatoirement
     ClassType classType1 = getRandomClassType();
     ClassType classType2 = getRandomClassType();
 
-    // Créer les personnages
+    // Creer les personnages
     Character character1("Personnage 1", classType1);
     Character character2("Personnage 2", classType2);
 

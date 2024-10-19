@@ -21,7 +21,8 @@ void Menu::searchItems(InventoryLib& inventory) {
         std::cout << "6. Statistiques de defense max \n";
         std::cout << "7. Element \n";
         std::cout << "8. Lancer la recherche\n";
-        std::cout << "9. Quitter\n";
+        std::cout << "9. Reinitialiser la recherche\n";
+        std::cout << "10. Quitter\n";
         std::cout << "\tEntrez votre choix: ";
 
         if (!(std::cin >> choice)) {
@@ -89,6 +90,16 @@ void Menu::searchItems(InventoryLib& inventory) {
             }
             break;
         case 9:
+            name = "";
+            type = "";
+            element = "";
+            minAttack = 0;
+            maxAttack = 0;
+            minDefense = 0;
+            maxDefense = 0;
+            std::cout << "\n\tLes criteres de recherche ont ete reinitialises.\n";
+            break;
+        case 10:
             std::cout << "Quitter la recherche.\n";
             return;
         default:
@@ -130,28 +141,54 @@ void Menu::showCharacterMenu(Character& character) {
             system("CLS");
             int itemIndex;
             character.getInventory().displayInventoryByType("Weapon");
-            std::cout << "\tSelectionnez une arme dans l'inventaire (index): ";
-            while (!(std::cin >> itemIndex) || itemIndex < 0 || itemIndex >= character.getInventory().getItemCount()) {
-                std::cout << "\n\tErreur: Entrez un index valide.\n";
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n\n\tSelectionnez une arme dans l'inventaire (index, ou -1 pour annuler): ";
+            while (true) {
+                if (!(std::cin >> itemIndex)) {
+                    std::cout << "\n\tErreur: Entrez un index valide (ou -1 pour annuler): \t";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;
+                }
+                if (itemIndex == -1) {
+                    std::cout << "\n\tRetour en arriere...\n\n";
+                    break;
+                }
+                if (itemIndex >= 0 && itemIndex < character.getInventory().getItemCount()) {
+                    character.equipWeapon(dynamic_cast<Weapon*>(character.getInventory().getItem(itemIndex)));
+                    std::cout << "\n\t\tArme equipee!\n\n";
+                    break;
+                }
+                else {
+                    std::cout << "\n\tErreur: Entrez un index valide (ou -1 pour annuler): \t";
+                }
             }
-            character.equipWeapon(dynamic_cast<Weapon*>(character.getInventory().getItem(itemIndex)));
-            std::cout << "\n\t\tArme equipee!\n";
             break;
         }
         case 4: {
             system("CLS");
             int itemIndex;
             character.getInventory().displayInventoryByType("Armor");
-            std::cout << "\tSelectionnez une armure dans l'inventaire (index): ";
-            while (!(std::cin >> itemIndex) || itemIndex < 0 || itemIndex >= character.getInventory().getItemCount()) {
-                std::cout << "\n\tErreur: Entrez un index valide.\n";
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n\n\tSelectionnez une armure dans l'inventaire (index, ou -1 pour annuler): ";
+            while (true) {
+                if (!(std::cin >> itemIndex)) {
+                    std::cout << "\n\tErreur: Entrez un index valide (ou -1 pour annuler): \t";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;
+                }
+                if (itemIndex == -1) {
+                    std::cout << "\n\tRetour en arriere...\n\n";
+                    break;
+                }
+                if (itemIndex >= 0 && itemIndex < character.getInventory().getItemCount()) {
+                    character.equipArmor(dynamic_cast<Armor*>(character.getInventory().getItem(itemIndex)));
+                    std::cout << "\n\t\tArmure equipee!\n\n";
+                    break;
+                }
+                else {
+                    std::cout << "\n\tErreur: Entrez un index valide (ou -1 pour annuler): \t";
+                }
             }
-            character.equipArmor(dynamic_cast<Armor*>(character.getInventory().getItem(itemIndex)));
-            std::cout << "\n\t\tArmure equipee!\n";
             break;
         }
         case 5:
@@ -167,7 +204,6 @@ void Menu::showCharacterMenu(Character& character) {
         }
     } while (choice != 6);
 }
-
 void Menu::showManageCharactersMenu(Character& character1, Character& character2) {
     int choice = 0;
     do {
@@ -181,16 +217,20 @@ void Menu::showManageCharactersMenu(Character& character1, Character& character2
 
         switch (choice) {
         case 1:
+            system("CLS");
             showCharacterMenu(character1);
             break;
         case 2:
+            system("CLS");
             showCharacterMenu(character2);
             break;
         case 3:
-            std::cout << "Retour au menu principal...\n";
+            std::cout << "\n\t\tRetour au menu principal...\n";
+            system("CLS");
             break;
         default:
-            std::cout << "Option non valide. Veuillez choisir a nouveau.\n";
+            system("CLS");
+            std::cout << "\n\tOption non valide. Veuillez choisir a nouveau.\n";
         }
     } while (choice != 3);
 }
