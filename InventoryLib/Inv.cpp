@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Inv.h"
 #include <algorithm>
 #include <iostream>
@@ -109,7 +108,9 @@ void InventoryLib::sortByElement() {
         });
 }
 
-
+size_t InventoryLib::getItemCount() const {
+    return items.size();
+}
 
 std::vector<Item*> InventoryLib::getItems() const {
     std::vector<Item*> result; 

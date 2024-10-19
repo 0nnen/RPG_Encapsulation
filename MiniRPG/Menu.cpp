@@ -1,59 +1,80 @@
 #include "Menu.h"
 #include <iostream>
-#include "Combat.h"
-#include "Inv.h"
 #include <string>
+#include <limits>
 
 void Menu::searchItems(InventoryLib& inventory) {
     std::string name, type, element;
     int minAttack = 0, maxAttack = 0, minDefense = 0, maxDefense = 0;
     int choice = 0;
 
-    std::cout << "Recherche d'objets:\n";
+    system("CLS");
+    std::cout << "\n\n\t\tRecherche d'objets:\n";
 
     while (true) {
-        std::cout << "\nFaites votre choix:\n";
+        std::cout << "\n\tFaites votre choix:\n";
         std::cout << "1. Nom \n";
         std::cout << "2. Type \n";
         std::cout << "3. Statistiques d'attaque min \n";
         std::cout << "4. Statistiques d'attaque max \n";
-        std::cout << "5. Statistiques de défense min \n";
-        std::cout << "6. Statistiques de défense max \n";
+        std::cout << "5. Statistiques de defense min \n";
+        std::cout << "6. Statistiques de defense max \n";
         std::cout << "7. Element \n";
         std::cout << "8. Lancer la recherche\n";
-        std::cout << "9. Quitter\n";  
-        std::cout << "Entrez votre choix: ";
+        std::cout << "9. Quitter\n";
+        std::cout << "\tEntrez votre choix: ";
 
-        std::cin >> choice;
-        std::cin.ignore(); 
+        if (!(std::cin >> choice)) {
+            std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+        std::cin.ignore();
 
         switch (choice) {
         case 1:
-            std::cout << "Entrez le nom: ";
+            std::cout << "\t\tEntrez le nom: ";
             std::getline(std::cin, name);
             break;
         case 2:
-            std::cout << "Entrez le type: ";
+            std::cout << "\t\tEntrez le type: ";
             std::getline(std::cin, type);
             break;
         case 3:
-            std::cout << "Entrez les statistiques d'attaque min: ";
-            std::cin >> minAttack;
+            std::cout << "\t\tEntrez les statistiques d'attaque min: ";
+            while (!(std::cin >> minAttack)) {
+                std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             break;
         case 4:
-            std::cout << "Entrez les statistiques d'attaque max: ";
-            std::cin >> maxAttack;
+            std::cout << "\t\tEntrez les statistiques d'attaque max: ";
+            while (!(std::cin >> maxAttack)) {
+                std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             break;
         case 5:
-            std::cout << "Entrez les statistiques de défense min: ";
-            std::cin >> minDefense;
+            std::cout << "\t\tEntrez les statistiques de defense min: ";
+            while (!(std::cin >> minDefense)) {
+                std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             break;
         case 6:
-            std::cout << "Entrez les statistiques de défense max: ";
-            std::cin >> maxDefense;
+            std::cout << "\t\tEntrez les statistiques de defense max: ";
+            while (!(std::cin >> maxDefense)) {
+                std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             break;
         case 7:
-            std::cout << "Entrez l'élément: ";
+            std::cout << "\t\tEntrez l'element: ";
             std::getline(std::cin, element);
             break;
         case 8:
@@ -61,7 +82,7 @@ void Menu::searchItems(InventoryLib& inventory) {
             {
                 auto results = inventory.searchByCriteria(name, type, minAttack, maxAttack, minDefense, maxDefense, element);
 
-                std::cout << "Résultats de la recherche:\n";
+                std::cout << "\n\n\t\tResultats de la recherche:\n";
                 for (const auto& item : results) {
                     std::cout << item->getName() << " (" << item->getType() << ")\n";
                 }
@@ -69,9 +90,9 @@ void Menu::searchItems(InventoryLib& inventory) {
             break;
         case 9:
             std::cout << "Quitter la recherche.\n";
-            return; 
+            return;
         default:
-            std::cout << "Choix invalide, veuillez réessayer.\n";
+            std::cout << "\n\n\t\tChoix invalide, veuillez reessayer.\n";
             break;
         }
     }
@@ -88,7 +109,13 @@ void Menu::showCharacterMenu(Character& character) {
         std::cout << "5. Rechercher des objets\n";
         std::cout << "6. Retour\n";
         std::cout << "\n\t\tChoisissez une option: ";
-        std::cin >> choice;
+
+        if (!(std::cin >> choice)) {
+            std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
 
         switch (choice) {
         case 1:
@@ -104,7 +131,11 @@ void Menu::showCharacterMenu(Character& character) {
             int itemIndex;
             character.getInventory().displayInventoryByType("Weapon");
             std::cout << "\tSelectionnez une arme dans l'inventaire (index): ";
-            std::cin >> itemIndex;
+            while (!(std::cin >> itemIndex) || itemIndex < 0 || itemIndex >= character.getInventory().getItemCount()) {
+                std::cout << "\n\tErreur: Entrez un index valide.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             character.equipWeapon(dynamic_cast<Weapon*>(character.getInventory().getItem(itemIndex)));
             std::cout << "\n\t\tArme equipee!\n";
             break;
@@ -114,7 +145,11 @@ void Menu::showCharacterMenu(Character& character) {
             int itemIndex;
             character.getInventory().displayInventoryByType("Armor");
             std::cout << "\tSelectionnez une armure dans l'inventaire (index): ";
-            std::cin >> itemIndex;
+            while (!(std::cin >> itemIndex) || itemIndex < 0 || itemIndex >= character.getInventory().getItemCount()) {
+                std::cout << "\n\tErreur: Entrez un index valide.\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             character.equipArmor(dynamic_cast<Armor*>(character.getInventory().getItem(itemIndex)));
             std::cout << "\n\t\tArmure equipee!\n";
             break;

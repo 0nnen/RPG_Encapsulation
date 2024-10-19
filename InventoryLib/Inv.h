@@ -21,6 +21,7 @@ public:
     std::vector<Item*> searchByStat(int minStat, int maxStat) const;
     void sortByType();
     void sortByElement();
+    size_t getItemCount() const;
     std::vector<Item*> getItems() const;
     void displayItems() const;
     std::vector<Item*> searchByCriteria(const std::string& name, const std::string& type,

@@ -1,6 +1,11 @@
 #pragma once
 #include "Character.h"
 #include "Inv.h"
+#include "Combat.h"
+#include "Inv.h"
+#include <iostream>
+#include <string>
+#include <limits>
 
 class Menu {
 public:
