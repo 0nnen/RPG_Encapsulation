@@ -13,10 +13,12 @@ Hache du Berserker;Weapon;35;Fire;10;Rare;Une hache puissante utilisee par les b
 Massue du Berserker;Weapon;30;None;9;Common;Une massue lourde utilisee pour infliger de gros degats.
 Masse du Paladin;Weapon;30;Divine;8;Uncommon;Une masse sacree utilisee par les paladins.
 Marteau du Paladin;Weapon;40;Divine;12;Epic;Un marteau divin capable de repousser les tenebres.
-Arc du Ranger;Weapon;20;None;4;Common;Un arc standard utilise par les rangers.
-Arbalete du Ranger;Weapon;25;Ice;6;Uncommon;Une arbalete legere avec des fleches glaciales.
+Arc du Archer;Weapon;20;None;4;Common;Un arc standard utilise par les Archers.
+Arbalete du Archer;Weapon;25;Ice;6;Uncommon;Une arbalete legere avec des fleches glaciales.
 Baton du Necromancien;Weapon;20;Dark;3;Rare;Un baton canalise les forces sombres pour des sorts puissants.
 Dague du Necromancien;Weapon;15;Poison;2;Common;Une dague envenimee parfaite pour les rituels occultes.
+Lance de Titan;Weapon;50;None;10;Epic;Une lance aussi grande que mon esperance de vie.
+Cigarette;Weapon;100;Poison;1;Uncommun;Bah une clope quoi...
 
 # Armures
 Armure de Cuir;Armor;10;None;5;Common;Une armure legere en cuir offrant une protection basique.

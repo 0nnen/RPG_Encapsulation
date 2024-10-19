@@ -1,11 +1,12 @@
 #pragma once
-#include "Character.h"
-#include "Inv.h"
-#include "Combat.h"
-#include "Inv.h"
 #include <iostream>
 #include <string>
 #include <limits>
+#include "Character.h"
+#include "Inv.h"
+#include "Combat.h"
+
+class Character;
 
 class Menu {
 public:
@@ -13,4 +14,5 @@ public:
     static void showManageCharactersMenu(Character& character1, Character& character2);
     static void showCharacterMenu(Character& character);
     static void searchItems(InventoryLib& inventory);
+    static void waitForEnter();
 };

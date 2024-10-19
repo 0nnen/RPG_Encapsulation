@@ -11,7 +11,7 @@ std::vector<std::unique_ptr<Item>> ParsingLib::parseInventoryFile(const std::str
     }
 
     std::string line;
-    std::getline(file, line); // Lire la premiere ligne pour obtenir le format (ignorer pour l'instant)
+    std::getline(file, line); // Lire la premiere ligne pour obtenir le format
 
     while (std::getline(file, line)) {
         if (line.empty() || line[0] == '#') continue;  // Ignorer les lignes vides ou les commentaires
@@ -54,7 +54,7 @@ std::vector<Class> ParsingLib::parseClassFile(const std::string& filePath) {
     }
 
     std::string line;
-    std::getline(file, line); // Lire la premiere ligne pour obtenir le format (ignorer pour l'instant)
+    std::getline(file, line); // Lire la premiere ligne pour obtenir le format
 
     while (std::getline(file, line)) {
         if (line.empty() || line[0] == '#') continue;  // Ignorer les lignes vides ou les commentaires

@@ -2,12 +2,16 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
+#include "Inv.h"
+#include "Class.h"
 #include "Weapon.h"
 #include "Armor.h"
+#include "Combat.h"
 #include "Skill.h"
 #include "StatusEffect.h"
-#include "Inv.h"  
-#include "Class.h"
 
 class Character {
 private:

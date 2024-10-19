@@ -3,7 +3,13 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <algorithm>
+#include <iostream>
 #include "Item.h"
+#include "Weapon.h"
+#include "Armor.h"
+#include "Element.h"
+#include "Rarity.h"
 
 class InventoryLib {
 private:
@@ -15,6 +21,7 @@ public:
     void displayInventoryByType(const std::string& type) const;
     void displayInventory() const;
     void addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems);
+    void addRandomItems(const std::vector<std::unique_ptr<Item>>& allItems, int itemCount);
     size_t getSize() const { return items.size(); }
 
     bool removeItem(const std::string& itemName);

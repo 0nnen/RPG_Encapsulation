@@ -18,7 +18,7 @@ inline std::ostream& operator<<(std::ostream& os, const Element& element) {
     case Element::Ice: os << "Glace"; break;
     case Element::Poison: os << "Poison"; break;
     case Element::Divine: os << "Divin"; break;
-    case Element::Dark: os << "Tenèbres"; break;
+    case Element::Dark: os << "Tenebres"; break;
     }
     return os;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <string> 
 
 enum class Rarity {
     Common,
@@ -6,3 +7,5 @@ enum class Rarity {
     Rare,
     Epic
 };
+
+std::string rarityToString(Rarity rarity);

@@ -1,12 +1,12 @@
 # Format: ClassName;SkillName;Damage;StaminaCost;IsElemental;IsHealing;IsBuffAttack;IsBuffDefense
 
-# Warrior Class Skills
-Warrior;Trancher;10;20;false;false;false;false
-Warrior;Charge;15;25;false;false;true;false
-Warrior;Coup Puissant;20;30;false;false;false;false
-Warrior;Cri de Guerre;0;10;false;false;false;true
-Warrior;Frappe Eclair;25;35;false;false;false;false
-Warrior;Tourbillon;18;20;false;false;false;false
+# Guerrier Class Skills
+Guerrier;Trancher;10;20;false;false;false;false
+Guerrier;Charge;15;25;false;false;true;false
+Guerrier;Coup Puissant;20;30;false;false;false;false
+Guerrier;Cri de Guerre;0;10;false;false;false;true
+Guerrier;Frappe Eclair;25;35;false;false;false;false
+Guerrier;Tourbillon;18;20;false;false;false;false
 
 # Mage Class Skills
 Mage;Boule de Feu;20;30;true;false;false;false
@@ -16,13 +16,13 @@ Mage;Soin Magique;0;25;false;true;false;false
 Mage;Tempete Arcane;30;40;true;false;false;false
 Mage;Mur de Glace;0;15;false;false;false;true
 
-# Knight Class Skills
-Knight;Coup de Bouclier;10;15;false;false;false;true
-Knight;Posture Defensive;0;20;false;false;false;true
-Knight;Lame Divine;25;35;true;false;false;false
-Knight;Charge Du Chevalier;0;25;false;false;true;false
-Knight;Barriere Divine;0;25;false;false;false;true
-Knight;Frappe Juste;30;40;false;false;false;false
+# Chevalier Class Skills
+Chevalier;Coup de Bouclier;10;15;false;false;false;true
+Chevalier;Posture Defensive;0;20;false;false;false;true
+Chevalier;Lame Divine;25;35;true;false;false;false
+Chevalier;Charge Du Chevalier;0;25;false;false;true;false
+Chevalier;Barriere Divine;0;25;false;false;false;true
+Chevalier;Frappe Juste;30;40;false;false;false;false
 
 # Assassin Class Skills
 Assassin;Coup Mortel;15;35;false;false;false;false
@@ -48,20 +48,20 @@ Paladin;Frappe Celeste;25;30;true;false;false;false
 Paladin;Protection Divine;0;30;false;false;false;true
 Paladin;Jugement Divin;35;45;true;false;false;false
 
-# Ranger Class Skills
-Ranger;Tir de Fleche;10;20;false;false;false;false
-Ranger;Piege;15;25;false;false;false;false
-Ranger;Fleche Empoisonnee;10;20;true;false;false;false
-Ranger;Tir Precis;20;30;false;false;false;false
-Ranger;Tir Explosif;25;35;false;false;false;false
-Ranger;Furtivite;0;10;false;false;false;true
+# Archer Class Skills
+Archer;Tir de Fleche;10;20;false;false;false;false
+Archer;Piege;15;25;false;false;false;false
+Archer;Fleche Empoisonnee;10;20;true;false;false;false
+Archer;Tir Precis;20;30;false;false;false;false
+Archer;Tir Explosif;25;35;false;false;false;false
+Archer;Furtivite;0;10;false;false;false;true
 
-# Necromancer Class Skills
-Necromancer;Eclair Sombre;20;25;true;false;false;false
-Necromancer;Drain de Vie;0;30;true;true;false;false
-Necromancer;Explosion de Cadavres;30;40;true;false;false;false
-Necromancer;Siphon d'Ame;0;20;true;true;false;false
-Necromancer;Fleau Sombre;35;45;true;false;false;false
+# Necromancien Class Skills
+Necromancien;Eclair Sombre;20;25;true;false;false;false
+Necromancien;Drain de Vie;0;30;true;true;false;false
+Necromancien;Explosion de Cadavres;30;40;true;false;false;false
+Necromancien;Siphon d'Ame;0;20;true;true;false;false
+Necromancien;Fleau Sombre;35;45;true;false;false;false
 
 # Tortue Class Skills
 Tortue;Carapace;0;10;false;false;false;true
@@ -86,30 +86,30 @@ Phoenix;Morsure;25;35;false;false;false;false
 Phoenix;Presence Mystique;0;10;false;false;false;true
 Phoenix;Vol;0;10;false;false;false;true
 
-# Unicorn Class Skills
-Unicorn;Coup de Corne;10;20;false;false;false;false
-Unicorn;Rayon de Lumiere;15;25;true;false;false;false
-Unicorn;Soin;0;20;false;true;false;false
-Unicorn;Frappe Arc-en-ciel;25;35;false;false;false;false
-Unicorn;Protection;0;30;false;false;false;true
+# Licorne Class Skills
+Licorne;Coup de Corne;10;20;false;false;false;false
+Licorne;Rayon de Lumiere;15;25;true;false;false;false
+Licorne;Soin;0;20;false;true;false;false
+Licorne;Frappe Arc-en-ciel;25;35;false;false;false;false
+Licorne;Protection;0;30;false;false;false;true
 
 # Demon Class Skills
 Demon;Souffle de l'Enfer;20;30;true;false;false;false
-Demon;Malédiction;0;25;true;false;false;false
+Demon;Malediction;0;25;true;false;false;false
 Demon;Frappe Infernale;25;35;true;false;false;false
 Demon;Sacrifice;0;10;false;false;false;true
 Demon;Fureur Infernale;30;40;true;false;false;false
 
-# Angel Class Skills
-Angel;Coup de Grace;15;20;true;false;false;false
-Angel;Bouclier Sacre;0;20;false;false;false;true
-Angel;Soin Sacre;0;25;false;true;false;false
-Angel;Frappe Celeste;25;30;true;false;false;false
-Angel;Protection Divine;0;30;false;false;false;true
+# Ange Class Skills
+Ange;Coup de Grace;15;20;true;false;false;false
+Ange;Bouclier Sacre;0;20;false;false;false;true
+Ange;Soin Sacre;0;25;false;true;false;false
+Ange;Frappe Celeste;25;30;true;false;false;false
+Ange;Protection Divine;0;30;false;false;false;true
 
 # Golem Class Skills
 Golem;Coup de Poing;10;20;false;false;false;false
 Golem;Charge;15;25;false;false;true;false
 Golem;Coup de Tete;20;30;false;false;false;false
-Golem;Piétinement;25;35;false;false;false;false
+Golem;Pietinement;25;35;false;false;false;false
 Golem;Mur de Pierre;0;10;false;false;false;true

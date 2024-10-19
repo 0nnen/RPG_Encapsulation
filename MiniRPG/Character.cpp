@@ -1,11 +1,4 @@
 #include "Character.h"
-#include "Combat.h"
-#include "Class.h"
-#include "ParsingLib.h"
-#include <algorithm>
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
 
 Character::Character(std::string name, const std::string& className)
     : name(name), className(className), mainWeapon(nullptr), armor(nullptr),
@@ -51,7 +44,7 @@ void Character::takeDamage(int damage) {
     // Verifie si le personnage esquive l'attaque
     int chance = rand() % 100;
     if (chance < evadeChance) {
-        std::cout << name << " a esquivé l'attaque !\n";
+        std::cout << name << " a esquive l'attaque !\n";
         return;  // Aucun degat n'est subi
     }
 
@@ -59,7 +52,7 @@ void Character::takeDamage(int damage) {
     int totalDefense = defense + defenseBuff;
     int damageReduced = std::max(0, damage - totalDefense);
 
-    // Mise à jour de la vie après reduction des degats
+    // Mise à jour de la vie apres reduction des degats
     health -= damageReduced;
     if (health < 0) health = 0;
 
@@ -100,14 +93,14 @@ void Character::useSkill(Character& opponent, int skillIndex) {
             }
         }
         else {
-            std::cout << "\n\t" << className << " est trop fatigué pour utiliser " << skill.getName() << ".\n";
+            std::cout << "\n\t" << className << " est trop fatigue pour utiliser " << skill.getName() << ".\n";
         }
     }
 }
 
 void Character::attack(Character& opponent) {
     if (mainWeapon) {
-        int damage = mainWeapon->getDamage() + attackBuff;
+        int damage = mainWeapon->getAttack() + attackBuff;
         std::cout << className << " attaque " << opponent.getName() << " avec " << damage << " degats.\n";
 
         // Verification de la synergie
@@ -119,7 +112,7 @@ void Character::attack(Character& opponent) {
         // 30% de chance d'appliquer des degats elementaires
         int chance = rand() % 100;
         if (hasElementalSynergy() && chance < 30) {
-            std::cout << "Effet elementaire activé pour " << name << " ! Degats supplementaires liés à l'element : " << mainWeapon->getElement() << "\n";
+            std::cout << "Effet elementaire active pour " << name << " ! Degats supplementaires lies à l'element : " << mainWeapon->getElement() << "\n";
             damage += 10;
         }
 
@@ -196,7 +189,7 @@ void Character::displayCharacterInfo() const {
 
     // Afficher l'arme equipee
     if (mainWeapon) {
-        std::cout << "Arme: " << mainWeapon->getName() << " (Degats: " << mainWeapon->getDamage()
+        std::cout << "Arme: " << mainWeapon->getName() << " (Degats: " << mainWeapon->getAttack()
             << ", Element: " << mainWeapon->getElement() << ")\n";
     }
     else {

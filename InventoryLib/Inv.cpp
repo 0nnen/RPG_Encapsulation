@@ -1,9 +1,5 @@
 #include "Inv.h"
-#include <algorithm>
-#include <iostream>
-#include "Weapon.h"
-#include "Armor.h"
-#include "Element.h"
+
 
 void InventoryLib::addItem(std::unique_ptr<Item> item) {
     items.push_back(std::move(item));
@@ -38,10 +34,22 @@ void InventoryLib::displayInventoryByType(const std::string& type) const {
                 std::cout << "\n\t\t=== " << (type == "Weapon" ? "ARMES" : "ARMURES") << " ===\n";
                 headerShown = true;
             }
-            std::cout << "ID: " << i << " - " << item->getName() << " (" << item->getType() << ")\n";
+            std::cout << "\nID: " << i << " - " << item->getName() << " (" << item->getType() << ")\n";
+            std::cout << "\tPoids: " << item->getWeight() << "\n";
+            std::cout << "\tElement: " << item->getElement() << "\n";
+            std::cout << "\tRarete: " << rarityToString(item->getRarity()) << "\n";
+            std::cout << "\tDescription: " << item->getDescription() << "\n";
+
+            if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+                std::cout << "\tAttaque: " << weapon->getAttack() << "\n";
+            }
+            else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+                std::cout << "\tDefense: " << armor->getDefense() << "\n";
+            }
         }
     }
 }
+
 void InventoryLib::displayInventory() const {
     bool weaponsShown = false;
     bool armorsShown = false;
@@ -61,17 +69,37 @@ void InventoryLib::displayInventory() const {
             std::cout << "\n=== POTIONS ===\n";
             potionsShown = true;
         }
-        std::cout << "ID: " << i << "\t" << item->getName() << " (" << item->getType() << ")\n";
+        std::cout << "\nID: " << i << "\t" << item->getName() << " (" << item->getType() << ")\n";
+        std::cout << "\tStatistiques: " << item->getStat() << "\n";
+        std::cout << "\tPoids: " << item->getWeight() << "\n";
+        std::cout << "\tElement: " << item->getElement() << "\n";
+        std::cout << "\tRarete: " << rarityToString(item->getRarity()) << "\n";
+        std::cout << "\tDescription: " << item->getDescription() << "\n";
     }
 }
+
 
 void InventoryLib::addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems) {
     for (const auto& item : allItems) {
         if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
-            addItem(std::make_unique<Weapon>(*weapon)); 
+            addItem(std::make_unique<Weapon>(*weapon));
         }
         else if (auto armor = dynamic_cast<Armor*>(item.get())) {
-            addItem(std::make_unique<Armor>(*armor)); 
+            addItem(std::make_unique<Armor>(*armor));
+        }
+    }
+}
+
+void InventoryLib::addRandomItems(const std::vector<std::unique_ptr<Item>>& allItems, int itemCount) {
+    srand(static_cast<unsigned>(time(0)));
+    for (int i = 0; i < itemCount; ++i) {
+        int randomIndex = rand() % allItems.size();
+        const auto& item = allItems[randomIndex];
+        if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+            addItem(std::make_unique<Weapon>(*weapon));
+        }
+        else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+            addItem(std::make_unique<Armor>(*armor));
         }
     }
 }
@@ -81,7 +109,7 @@ std::vector<Item*> InventoryLib::searchByStat(int minStat, int maxStat) const {
 
     for (const auto& item : items) {
         if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
-            if (weapon->getAttack() >= minStat && weapon->getAttack() <= maxStat) { 
+            if (weapon->getAttack() >= minStat && weapon->getAttack() <= maxStat) {
                 result.push_back(weapon);
             }
         }
@@ -94,7 +122,6 @@ std::vector<Item*> InventoryLib::searchByStat(int minStat, int maxStat) const {
 
     return result;
 }
-
 
 void InventoryLib::sortByType() {
     std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
@@ -113,21 +140,24 @@ size_t InventoryLib::getItemCount() const {
 }
 
 std::vector<Item*> InventoryLib::getItems() const {
-    std::vector<Item*> result; 
+    std::vector<Item*> result;
     for (const auto& item : items) {
-        result.push_back(item.get());  
+        result.push_back(item.get());
     }
     return result;
 }
-
 
 void InventoryLib::displayItems() const {
     std::cout << "Items dans l'inventaire:\n";
     for (const auto& item : items) {
         std::cout << item->getName() << " (" << item->getType() << ")\n";
+        std::cout << "\tStatistiques: " << item->getStat() << "\n";
+        std::cout << "\tPoids: " << item->getWeight() << "\n";
+        std::cout << "\tElement: " << item->getElement() << "\n";
+        std::cout << "\tRarete: " << rarityToString(item->getRarity()) << "\n";
+        std::cout << "\tDescription: " << item->getDescription() << "\n";
     }
 }
-
 
 std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const std::string& type,
     int minAttack, int maxAttack,

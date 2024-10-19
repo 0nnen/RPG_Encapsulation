@@ -1,7 +1,5 @@
 #include "Menu.h"
-#include <iostream>
-#include <string>
-#include <limits>
+
 
 void Menu::searchItems(InventoryLib& inventory) {
     std::string name, type, element;
@@ -246,8 +244,8 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
             break;
         case 2:
             std::cout << "\n\t\tLancement du combat...\n\n\n";
+
             Combat::engage(character1, character2);
-            break;
         case 3:
             std::cout << "\n\n\n\t\tAu revoir!\n";
             break;
@@ -255,4 +253,9 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
             std::cout << "\n\t\tOption non valide. Veuillez choisir a nouveau.\n";
         }
     } while (choice != 3);
+}
+
+void Menu::waitForEnter() {
+    std::cout << "Appuyez sur Entrée pour continuer...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

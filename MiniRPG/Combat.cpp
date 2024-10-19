@@ -1,9 +1,6 @@
 #include "Combat.h"
-#include <cstdlib>
-#include <ctime>
-#include "ParsingLib.h"
 
-// Fonction pour obtenir une classe aléatoire
+// Fonction pour obtenir une classe aleatoire
 std::string getRandomClassName(const std::vector<Class>& classes) {
     int randomIndex = rand() % classes.size();
     return classes[randomIndex].getName();
@@ -12,10 +9,10 @@ std::string getRandomClassName(const std::vector<Class>& classes) {
 void Combat::engage(Character& character1, Character& character2) {
     // Verification de la synergie elementaire pour chaque personnage
     if (character1.hasElementalSynergy()) {
-        std::cout << character1.getName() << " possède une synergie entre son arme et son armure (" << character1.getWeaponElement() << ")!\n";
+        std::cout << character1.getName() << " possede une synergie entre son arme et son armure (" << character1.getWeaponElement() << ")!\n";
     }
     if (character2.hasElementalSynergy()) {
-        std::cout << character2.getName() << " possède une synergie entre son arme et son armure (" << character2.getWeaponElement() << ")!\n";
+        std::cout << character2.getName() << " possede une synergie entre son arme et son armure (" << character2.getWeaponElement() << ")!\n";
     }
 
     std::cout << "\n\n\n\n\t\t- -- === ---º|COMMENCEMENT DU COMBAT|º--- === -- -\n\n";
@@ -47,7 +44,7 @@ void Combat::engage(Character& character1, Character& character2) {
             character2.useSkill(character1, skillIndex);
         }
 
-        // Afficher la sante des personnages après le tour
+        // Afficher la sante des personnages apres le tour
         std::cout << "\tºVie de " << character1.getName() << ": " << character1.getHealth() << "/" << character1.getMaxHealth() << "\n";
         std::cout << "\tºVie de " << character2.getName() << ": " << character2.getHealth() << "/" << character2.getMaxHealth() << "\n\n";
 
@@ -59,4 +56,5 @@ void Combat::engage(Character& character1, Character& character2) {
     }
 
     std::cout << "\n\t\t- -- === ---º|FIN DU COMBAT|º--- === -- -\n";
+    Menu::waitForEnter();
 }
