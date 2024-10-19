@@ -48,6 +48,9 @@
     <ClCompile Include="Rarity.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
@@ -83,8 +86,12 @@
     <ClInclude Include="Rarity.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="InventoryList.txt" />
+    <Text Include="ClassList.txt" />
   </ItemGroup>
 </Project>

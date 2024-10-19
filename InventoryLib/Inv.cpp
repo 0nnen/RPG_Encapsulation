@@ -175,3 +175,13 @@ std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const
 
     return results;
 }
+
+void InventoryLib::resetSearch() {
+    //name = "";
+    //type = "";
+    //element = "";
+    //minAttack = 0;
+    //maxAttack = 0;
+    //minDefense = 0;
+    //maxDefense = 0;
+}

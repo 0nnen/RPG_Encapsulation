@@ -1,96 +1,25 @@
 #include "Character.h"
+#include "Combat.h"
+#include "Class.h"
+#include "ParsingLib.h"
+#include <algorithm>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
-Character::Character(std::string name, ClassType classType)
-    : name(name), classType(classType), mainWeapon(nullptr), armor(nullptr),
+Character::Character(std::string name, const std::string& className)
+    : name(name), className(className), mainWeapon(nullptr), armor(nullptr),
     maxHealth(100), health(100), maxStamina(50), stamina(50), defense(0), defenseBuff(0),
-    attackBuff(0), evadeChance(0), synergyDetected(false) {
+    attackBuff(0), evadeChance(0), synergyDetected(false) {}
 
-    // Les competences sont definies selon la classe choisie
-    switch (classType) {
-    case ClassType::Warrior:
-        addSkill(Skill("Trancher", 10, 20));                     // Attaque de base
-        addSkill(Skill("Charge", 15, 25));                       // Attaque avec bonus de force
-        addSkill(Skill("Coup Puissant", 20, 30));                // Attaque forte
-        addSkill(Skill("Cri de Guerre", 0, 10, false, false, false, true));  // Buff defense (valeur remplacee par 10)
-        addSkill(Skill("Frappe Eclair", 25, 35));                // Attaque rapide
-        addSkill(Skill("Tourbillon", 18, 20));                   // Attaque multiple
-        break;
-
-    case ClassType::Mage:
-        addSkill(Skill("Boule de Feu", 20, 30, true));           // Attaque elementaire Feu
-        addSkill(Skill("Explosion de Glace", 20, 30, true));     // Attaque elementaire Glace
-        addSkill(Skill("Choc Electrique", 15, 20, true));        // Attaque elementaire Foudre
-        addSkill(Skill("Soin Magique", 25, 0, true, true));      // Soin (25 points de soins, remplace dans "degats")
-        addSkill(Skill("Tempete Arcane", 30, 40, true));         // Degats en zone
-        addSkill(Skill("Mur de Glace", 15, 0, false, false, false, true));  // Buff defense (15 points de buff, remplace dans "degats")
-        break;
-
-    case ClassType::Knight:
-        addSkill(Skill("Coup de Bouclier", 10, 15));             // Attaque avec bonus de defense
-        addSkill(Skill("Posture Defensive", 20, 0, false, false, false, true));  // Buff defense (20 points)
-        addSkill(Skill("Lame Divine", 25, 35, true));            // Attaque divine
-        addSkill(Skill("Charge Du Chevalier", 25, 0, false, false, true, false)); // Buff attaque (25 points)
-        addSkill(Skill("Barriere Divine", 25, 0, false, false, false, true));  // Buff defense (25 points)
-        addSkill(Skill("Frappe Juste", 30, 40));                 // Attaque critique
-        break;
-
-    case ClassType::Assassin:
-        addSkill(Skill("Coup Mortel", 15, 35));                  // Attaque critique
-        addSkill(Skill("Pas de l'Ombre", 10, 0, false, false, false, true));   // Esquive (buff esquive de 10%)
-        addSkill(Skill("Coup Rapide", 12, 15));                  // Attaque rapide
-        addSkill(Skill("Lame Empoisonnee", 10, 20, true));       // Attaque avec poison
-        addSkill(Skill("Attaque Sournoise", 25, 35));            // Attaque surprise
-        addSkill(Skill("Frappe Furtive", 20, 30));               // Attaque furtive
-        break;
-
-    case ClassType::Berserker:
-        addSkill(Skill("Frappe de Rage", 20, 40));               // Attaque forte
-        addSkill(Skill("Berserk", 50, 0, false, false, true, false));  // Buff attaque (50 points)
-        addSkill(Skill("Coup Frontal", 15, 25));                 // Attaque directe
-        addSkill(Skill("Cri Sauvage", 10, 0, false, false, false, true));  // Buff vitesse (10 points)
-        addSkill(Skill("Attaque Devastatrice", 30, 45));         // Attaque lourde
-        addSkill(Skill("Sanguinaire", 25, 35, true, true));      // Attaque avec gain de vie
-        break;
-
-    case ClassType::Paladin:
-        addSkill(Skill("Coup Sacre", 15, 20, true));             // Attaque elementaire divine
-        addSkill(Skill("Bouclier Divin", 20, 0, false, false, false, true));   // Buff defense (20 points)
-        addSkill(Skill("Soin Divin", 25, 0, true, true));        // Soin (25 points)
-        addSkill(Skill("Frappe Celeste", 25, 30, true));         // Attaque elementaire
-        addSkill(Skill("Protection Divine", 30, 0, false, false, false, true)); // Bouclier (30 points de defense)
-        addSkill(Skill("Jugement Divin", 35, 45, true));         // Attaque divine puissante
-        break;
-
-    case ClassType::Ranger:
-        addSkill(Skill("Tir de Fleche", 10, 20));                // Attaque à distance
-        addSkill(Skill("Piege", 15, 25));                        // Piège qui blesse
-        addSkill(Skill("Fleche Empoisonnee", 10, 20, true));     // Poison
-        addSkill(Skill("Tir Precis", 20, 30));                   // Attaque critique
-        addSkill(Skill("Tir Explosif", 25, 35));                 // Attaque en zone
-        addSkill(Skill("Furtivite", 10, 0, false, false, false, true)); // Buff esquive (10 points)
-        break;
-
-    case ClassType::Necromancer:
-        addSkill(Skill("Eclair Sombre", 20, 25, true));          // Attaque elementaire
-        addSkill(Skill("Drain de Vie", 30, 0, true, true));      // Vol de vie (30 points)
-        addSkill(Skill("Explosion de Cadavres", 30, 40, true));  // Attaque en zone
-        addSkill(Skill("Siphon d'Ame", 20, 0, true, true));      // Buff de vie (20 points)
-        addSkill(Skill("Fleau Sombre", 35, 45, true));           // Attaque puissante avec debuff
-        break;
-    }
-}
-
-std::string Character::getClassName(ClassType classType) {
-    switch (classType) {
-    case ClassType::Warrior: return "Guerrier";
-    case ClassType::Mage: return "Mage";
-    case ClassType::Knight: return "Chevalier";
-    case ClassType::Assassin: return "Assassin";
-    case ClassType::Berserker: return "Berserker";
-    case ClassType::Paladin: return "Paladin";
-    case ClassType::Ranger: return "Archer";
-    case ClassType::Necromancer: return "Necromancien";
-    default: return "Inconnu";
+void Character::initializeSkills(const std::vector<Class>& classes) {
+    for (const auto& characterClass : classes) {
+        if (characterClass.getName() == className) {
+            for (const auto& skill : characterClass.getSkills()) {
+                addSkill(skill);
+            }
+            break;
+        }
     }
 }
 
@@ -122,7 +51,7 @@ void Character::takeDamage(int damage) {
     // Verifie si le personnage esquive l'attaque
     int chance = rand() % 100;
     if (chance < evadeChance) {
-        std::cout << name << " a esquive l'attaque !\n";
+        std::cout << name << " a esquivé l'attaque !\n";
         return;  // Aucun degat n'est subi
     }
 
@@ -137,7 +66,6 @@ void Character::takeDamage(int damage) {
     std::cout << name << " subit " << damageReduced << " degats (reduction de " << totalDefense << " points de defense).\n";
 }
 
-
 bool Character::isAlive() const {
     return health > 0;
 }
@@ -151,48 +79,47 @@ void Character::useSkill(Character& opponent, int skillIndex) {
 
             if (skill.getIsHealing()) {
                 setHealth(health + skill.getDamage()); // Soigner le personnage
-                std::cout << getClassName(classType) << " utilise " << skill.getName()
+                std::cout << className << " utilise " << skill.getName()
                     << " et se soigne de " << skill.getDamage() << " points de vie.\n";
             }
             else if (skill.getIsBuffDefense()) {
                 increaseDefense(skill.getDamage()); // Buff de defense
-                std::cout << getClassName(classType) << " utilise " << skill.getName()
+                std::cout << className << " utilise " << skill.getName()
                     << " et augmente sa defense de " << skill.getDamage() << " points.\n";
             }
             else if (skill.getIsBuffAttack()) {
                 increaseAttack(skill.getDamage()); // Buff d'attaque
-                std::cout << getClassName(classType) << " utilise " << skill.getName()
+                std::cout << className << " utilise " << skill.getName()
                     << " et augmente son attaque de " << skill.getDamage() << " points.\n";
             }
             else {
                 opponent.takeDamage(skill.getDamage()); // Degats d'attaque
-                std::cout << getClassName(classType) << " utilise " << skill.getName()
+                std::cout << className << " utilise " << skill.getName()
                     << " contre " << opponent.getName() << " et inflige "
                     << skill.getDamage() << " points de degats.\n";
             }
         }
         else {
-            std::cout << "\n\t" << getClassName(classType) << " est trop fatigue pour utiliser " << skill.getName() << ".\n";
+            std::cout << "\n\t" << className << " est trop fatigué pour utiliser " << skill.getName() << ".\n";
         }
     }
 }
 
-
 void Character::attack(Character& opponent) {
     if (mainWeapon) {
         int damage = mainWeapon->getDamage() + attackBuff;
-        std::cout << getClassName(classType) << " attaque " << opponent.getName() << " avec " << damage << " degats.\n";
+        std::cout << className << " attaque " << opponent.getName() << " avec " << damage << " degats.\n";
 
         // Verification de la synergie
         if (hasElementalSynergy() && !synergyDetected) {
             synergyDetected = true;
-            std::cout << "\n\t" << name << " / " << getClassName(classType) << " a une synergie elementaire avec son equipement (" << mainWeapon->getElement() << ")!\n";
+            std::cout << "\n\t" << name << " / " << className << " a une synergie elementaire avec son equipement (" << mainWeapon->getElement() << ")!\n";
         }
 
         // 30% de chance d'appliquer des degats elementaires
         int chance = rand() % 100;
         if (hasElementalSynergy() && chance < 30) {
-            std::cout << "Effet elementaire active pour " << name << " ! Degats supplementaires lies a l'element : " << mainWeapon->getElement() << "\n";
+            std::cout << "Effet elementaire activé pour " << name << " ! Degats supplementaires liés à l'element : " << mainWeapon->getElement() << "\n";
             damage += 10;
         }
 
@@ -236,7 +163,7 @@ StatusEffect Character::getStatusEffectFromSynergy() const {
 
 void Character::applyStatusEffect(StatusEffect effect) {
     if (effect.getEffectType() != StatusEffectType::None) {
-        std::cout << "!!! " << getClassName(classType) << " subit l'effet : " << effect.getEffectName() << " !!!\n";
+        std::cout << "!!! " << className << " subit l'effet : " << effect.getEffectName() << " !!!\n";
         effect.applyEffect();
     }
 }
@@ -263,7 +190,7 @@ Element Character::getWeaponElement() const {
 }
 
 void Character::displayCharacterInfo() const {
-    std::cout << "Classe: " << getClassName(classType) << "\n";
+    std::cout << "Classe: " << className << "\n";
     std::cout << "Vie: " << health << "/" << maxHealth << "\n";
     std::cout << "Endurance: " << stamina << "/" << maxStamina << "\n";
 
@@ -291,4 +218,3 @@ void Character::displayCharacterInfo() const {
     }
     std::cout << "\n\n";
 }
-

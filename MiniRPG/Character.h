@@ -7,23 +7,12 @@
 #include "Skill.h"
 #include "StatusEffect.h"
 #include "Inv.h"  
-
-
-enum class ClassType {
-    Warrior,
-    Mage,
-    Knight,
-    Assassin,
-    Berserker,
-    Paladin,
-    Ranger,
-    Necromancer
-};
+#include "Class.h"
 
 class Character {
 private:
     std::string name;
-    ClassType classType;
+    std::string className;
     int health;
     int maxHealth;
     int defense;
@@ -36,24 +25,24 @@ private:
     Weapon* mainWeapon;
     Armor* armor;
     std::vector<Skill> skills;
-    InventoryLib inventory;  
+    InventoryLib inventory;
 
 public:
-    Character(std::string name, ClassType classType);
+    Character(std::string name, const std::string& className);
 
     // Getters and setters for encapsulation
-    InventoryLib& getInventory() { return inventory; }  
+    InventoryLib& getInventory() { return inventory; }
     int getHealth() const { return health; }
     int getMaxHealth() const { return maxHealth; }
     int getStamina() const { return stamina; }
-    int getMaxStamina() const { return maxStamina; }  
+    int getMaxStamina() const { return maxStamina; }
     int getDefense() const { return defense + defenseBuff; }
     int getDefenseBuff() const { return defenseBuff; }
     int getAttackBuff() const { return attackBuff; }
     int getEvadeChance() const { return evadeChance; }
     std::vector<Skill> getSkills() const { return skills; }
     std::string getName() const { return name; }
-    ClassType getClassType() const { return classType; }
+    std::string getClassName() const { return className; }
     void setHealth(int health);
     void setStamina(int stamina);
 
@@ -81,6 +70,5 @@ public:
     // Display character info
     void displayCharacterInfo() const;
 
-    static std::string getClassName(ClassType classType);
-
+    void initializeSkills(const std::vector<Class>& classes);
 };

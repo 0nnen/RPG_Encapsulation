@@ -90,13 +90,7 @@ void Menu::searchItems(InventoryLib& inventory) {
             }
             break;
         case 9:
-            name = "";
-            type = "";
-            element = "";
-            minAttack = 0;
-            maxAttack = 0;
-            minDefense = 0;
-            maxDefense = 0;
+
             std::cout << "\n\tLes criteres de recherche ont ete reinitialises.\n";
             break;
         case 10:

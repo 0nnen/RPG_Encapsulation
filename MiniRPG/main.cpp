@@ -7,24 +7,32 @@
 #include "Combat.h"
 
 int main() {
-    srand(static_cast<unsigned>(time(0)));  
+    srand(static_cast<unsigned>(time(0)));
 
+    // Récupérer tous les objets du fichier d'inventaire
     std::vector<std::unique_ptr<Item>> allItems = ParsingLib::parseInventoryFile("InventoryList.txt");
 
-    // Choisir deux classes aleatoirement
-    ClassType classType1 = getRandomClassType();
-    ClassType classType2 = getRandomClassType();
+    // Charger les classes disponibles depuis le fichier ClassList.txt
+    std::vector<Class> allClasses = ParsingLib::parseClassFile("ClassList.txt");
 
-    // Creer les personnages
-    Character character1("Personnage 1", classType1);
-    Character character2("Personnage 2", classType2);
+    // Choisir deux classes aléatoirement
+    std::string className1 = allClasses[rand() % allClasses.size()].getName();
+    std::string className2 = allClasses[rand() % allClasses.size()].getName();
+
+    // Créer les personnages
+    Character character1("Personnage 1", className1);
+    Character character2("Personnage 2", className2);
+
+    // Initialiser les compétences des personnages
+    character1.initializeSkills(allClasses);
+    character2.initializeSkills(allClasses);
 
     // Ajouter des objets à leurs inventaires
     character1.getInventory().addItemsFromList(allItems);
     character2.getInventory().addItemsFromList(allItems);
 
     // Afficher le menu principal
-    Menu::showMainMenu(character1, character2); 
+    Menu::showMainMenu(character1, character2);
 
     return 0;
 }
