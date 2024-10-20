@@ -18,6 +18,11 @@ void Combat::engage(Character& character1, Character& character2) {
     std::cout << "\n\n\n\n\t\t- -- === ---º|COMMENCEMENT DU COMBAT|º--- === -- -\n\n";
 
     while (character1.isAlive() && character2.isAlive()) {
+        // Afficher la sante des personnages apres le tour
+        std::cout << "\tºVie de " << character1.getName() << ": " << character1.getHealth() << "/" << character1.getMaxHealth() << "\n";
+        std::cout << "\tºVie de " << character2.getName() << ": " << character2.getHealth() << "/" << character2.getMaxHealth() << "\n\n";
+
+
         // Tour du premier personnage
         if (rand() % 2 == 0) {
             // Attaque de base

@@ -1,5 +1,6 @@
 #include "Menu.h"
-
+#include <limits>
+#include "Combat.h"
 
 void Menu::searchItems(InventoryLib& inventory) {
     std::string name, type, element;
@@ -86,9 +87,11 @@ void Menu::searchItems(InventoryLib& inventory) {
                     std::cout << item->getName() << " (" << item->getType() << ")\n";
                 }
             }
+            waitForEnter();
             break;
         case 9:
-
+            name = type = element = "";
+            minAttack = maxAttack = minDefense = maxDefense = 0;
             std::cout << "\n\tLes criteres de recherche ont ete reinitialises.\n";
             break;
         case 10:
@@ -124,10 +127,12 @@ void Menu::showCharacterMenu(Character& character) {
         case 1:
             system("CLS");
             character.getInventory().displayInventory();
+            waitForEnter();
             break;
         case 2:
             system("CLS");
             character.displayCharacterInfo();
+            waitForEnter();
             break;
         case 3: {
             system("CLS");
@@ -154,6 +159,7 @@ void Menu::showCharacterMenu(Character& character) {
                     std::cout << "\n\tErreur: Entrez un index valide (ou -1 pour annuler): \t";
                 }
             }
+            waitForEnter();
             break;
         }
         case 4: {
@@ -181,6 +187,7 @@ void Menu::showCharacterMenu(Character& character) {
                     std::cout << "\n\tErreur: Entrez un index valide (ou -1 pour annuler): \t";
                 }
             }
+            waitForEnter();
             break;
         }
         case 5:
@@ -192,10 +199,11 @@ void Menu::showCharacterMenu(Character& character) {
             std::cout << "\n\t\tRetour au menu precedent...\n\n";
             break;
         default:
-            std::cout << "\n\t\tOption non valide. Veuillez choisir a nouveau.\n";
+            std::cout << "\n\tOption non valide. Veuillez choisir a nouveau.\n";
         }
     } while (choice != 6);
 }
+
 void Menu::showManageCharactersMenu(Character& character1, Character& character2) {
     int choice = 0;
     do {
@@ -205,7 +213,12 @@ void Menu::showManageCharactersMenu(Character& character1, Character& character2
         std::cout << "2. Gerer le personnage 2\n";
         std::cout << "3. Retour au menu principal\n";
         std::cout << "\n\t\tChoisissez une option: ";
-        std::cin >> choice;
+        if (!(std::cin >> choice)) {
+            std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
 
         switch (choice) {
         case 1:
@@ -230,13 +243,17 @@ void Menu::showManageCharactersMenu(Character& character1, Character& character2
 void Menu::showMainMenu(Character& character1, Character& character2) {
     int choice = 0;
     do {
-        system("CLS");
         std::cout << "\n\t\t=== MENU PRINCIPAL ===\n";
         std::cout << "1. Gestion des personnages\n";
         std::cout << "2. Lancer le combat\n";
         std::cout << "3. Quitter\n";
         std::cout << "\n\t\tChoisissez une option: ";
-        std::cin >> choice;
+        if (!(std::cin >> choice)) {
+            std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
 
         switch (choice) {
         case 1:
@@ -244,13 +261,14 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
             break;
         case 2:
             std::cout << "\n\t\tLancement du combat...\n\n\n";
-
             Combat::engage(character1, character2);
+            waitForEnter();
+            break;
         case 3:
             std::cout << "\n\n\n\t\tAu revoir!\n";
             break;
         default:
-            std::cout << "\n\t\tOption non valide. Veuillez choisir a nouveau.\n";
+            std::cout << "\n\tOption non valide. Veuillez choisir a nouveau.\n";
         }
     } while (choice != 3);
 }
@@ -258,4 +276,5 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
 void Menu::waitForEnter() {
     std::cout << "Appuyez sur Entrée pour continuer...";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
 }

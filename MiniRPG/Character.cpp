@@ -2,7 +2,7 @@
 
 Character::Character(std::string name, const std::string& className)
     : name(name), className(className), mainWeapon(nullptr), armor(nullptr),
-    maxHealth(100), health(100), maxStamina(50), stamina(50), defense(0), defenseBuff(0),
+    maxHealth(100), health(100), maxStamina(500), stamina(500), defense(0), defenseBuff(0),
     attackBuff(0), evadeChance(0), synergyDetected(false) {}
 
 void Character::initializeSkills(const std::vector<Class>& classes) {
