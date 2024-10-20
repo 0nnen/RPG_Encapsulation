@@ -262,7 +262,6 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
         case 2:
             std::cout << "\n\t\tLancement du combat...\n\n\n";
             Combat::engage(character1, character2);
-            waitForEnter();
             break;
         case 3:
             std::cout << "\n\n\n\t\tAu revoir!\n";
@@ -274,7 +273,7 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
 }
 
 void Menu::waitForEnter() {
-    std::cout << "Appuyez sur Entrée pour continuer...";
+    std::cout << "Appuyez sur Entree pour continuer...";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
 }
