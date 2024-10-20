@@ -22,9 +22,10 @@ void Menu::searchItems(InventoryLib& inventory) {
         std::cout << "8. Lancer la recherche\n";
         std::cout << "9. Reinitialiser la recherche\n";
         std::cout << "10. Quitter\n";
-        std::cout << "\tEntrez votre choix: ";
+        std::cout << "\n\tEntrez votre choix: ";
 
         if (!(std::cin >> choice)) {
+            system("CLS");
             std::cout << "\n\tErreur: Entrez un nombre valide.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -117,6 +118,7 @@ void Menu::showCharacterMenu(Character& character) {
         std::cout << "\n\t\tChoisissez une option: ";
 
         if (!(std::cin >> choice)) {
+            system("CLS");
             std::cout << "\n\tErreur: Entrez un nombre valide.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -199,6 +201,7 @@ void Menu::showCharacterMenu(Character& character) {
             std::cout << "\n\t\tRetour au menu precedent...\n\n";
             break;
         default:
+            system("CLS");
             std::cout << "\n\tOption non valide. Veuillez choisir a nouveau.\n";
         }
     } while (choice != 6);
@@ -214,6 +217,7 @@ void Menu::showManageCharactersMenu(Character& character1, Character& character2
         std::cout << "3. Retour au menu principal\n";
         std::cout << "\n\t\tChoisissez une option: ";
         if (!(std::cin >> choice)) {
+            system("CLS");
             std::cout << "\n\tErreur: Entrez un nombre valide.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -249,6 +253,7 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
         std::cout << "3. Quitter\n";
         std::cout << "\n\t\tChoisissez une option: ";
         if (!(std::cin >> choice)) {
+            system("CLS");
             std::cout << "\n\tErreur: Entrez un nombre valide.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -267,6 +272,7 @@ void Menu::showMainMenu(Character& character1, Character& character2) {
             std::cout << "\n\n\n\t\tAu revoir!\n";
             break;
         default:
+			system("CLS");
             std::cout << "\n\tOption non valide. Veuillez choisir a nouveau.\n";
         }
     } while (choice != 3);
