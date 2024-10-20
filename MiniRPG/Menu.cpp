@@ -114,7 +114,8 @@ void Menu::showCharacterMenu(Character& character) {
         std::cout << "3. Equiper une arme\n";
         std::cout << "4. Equiper une armure\n";
         std::cout << "5. Rechercher des objets\n";
-        std::cout << "6. Retour\n";
+        std::cout << "6. Ajouter ou supprimer un objet\n"; 
+        std::cout << "7. Retour\n";
         std::cout << "\n\t\tChoisissez une option: ";
 
         if (!(std::cin >> choice)) {
@@ -129,6 +130,102 @@ void Menu::showCharacterMenu(Character& character) {
         case 1:
             system("CLS");
             character.getInventory().displayInventory();
+
+            int sortChoice;
+            do {
+                std::cout << "\n\tSouhaitez-vous trier l'inventaire ?\n";
+                std::cout << "1. Trier par nom (ascendant)\n";
+                std::cout << "2. Trier par nom (descendant)\n";
+                std::cout << "3. Trier par type (ascendant)\n";
+                std::cout << "4. Trier par type (descendant)\n";
+                std::cout << "5. Trier par élément (ascendant)\n";
+                std::cout << "6. Trier par élément (descendant)\n";
+                std::cout << "7. Trier par attaque (ascendant)\n";
+                std::cout << "8. Trier par attaque (descendant)\n";
+                std::cout << "9. Trier par défense (ascendant)\n";
+                std::cout << "10. Trier par défense (descendant)\n";
+                std::cout << "11. Quitter\n";
+                std::cout << "\n\t\tChoisissez une option: ";
+
+                if (!(std::cin >> sortChoice)) {
+                    std::cout << "\n\tErreur: Entrez un nombre valide.\n";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;
+                }
+
+                switch (sortChoice) {
+                case 1: // Option pour trier par nom (ascendant)
+                    character.getInventory().sortByName(true); // Tri ascendant
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par nom (ascendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 2: // Option pour trier par nom (descendant)
+                    character.getInventory().sortByName(false); // Tri descendant
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par nom (descendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 3: // Option pour trier par type (ascendant)
+                    character.getInventory().sortByType(true);
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par type (ascendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 4: // Option pour trier par type (descendant)
+                    character.getInventory().sortByType(false);
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par type (descendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 5: // Option pour trier par élément (ascendant)
+                    character.getInventory().sortByElement(true);
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par élément (ascendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 6: // Option pour trier par élément (descendant)
+                    character.getInventory().sortByElement(false);
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par élément (descendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 7: // Option pour trier par attaque (ascendant)
+                    character.getInventory().sortWeaponsByAttackAscending();
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par attaque (ascendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 8: // Option pour trier par attaque (descendant)
+                    character.getInventory().sortWeaponsByAttackDescending();
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par attaque (descendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 9: // Option pour trier par défense (ascendant)
+                    character.getInventory().sortArmorsByDefenseAscending();
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par défense (ascendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 10: // Option pour trier par défense (descendant)
+                    character.getInventory().sortArmorsByDefenseDescending();
+                    system("CLS");
+                    std::cout << "\n\tInventaire trié par défense (descendant) :\n";
+                    character.getInventory().displayInventory();
+                    break;
+                case 11:
+                    system("CLS");
+                    std::cout << "\n\tQuitter l'affichage de l'inventaire.\n";
+                    break;
+                default:
+                    std::cout << "\n\tOption non valide. Veuillez choisir à nouveau.\n";
+                }
+
+            } while (sortChoice != 11); // Continue until user chooses to quit
+
+
             waitForEnter();
             break;
         case 2:
@@ -138,6 +235,15 @@ void Menu::showCharacterMenu(Character& character) {
             break;
         case 3: {
             system("CLS");
+            int sortOrder;
+            std::cout << "\n\tChoisissez l'ordre de tri des armes :\n";
+            std::cout << "1. Ordre alphabétique (A-Z)\n";
+            std::cout << "2. Ordre alphabétique inversé (Z-A)\n";
+            std::cin >> sortOrder;
+
+            bool ascending = (sortOrder == 1);
+            character.getInventory().sortWeaponsByName(ascending); // Tri par nom des armes
+
             int itemIndex;
             character.getInventory().displayInventoryByType("Weapon");
             std::cout << "\n\n\tSelectionnez une arme dans l'inventaire (index, ou -1 pour annuler): ";
@@ -198,14 +304,62 @@ void Menu::showCharacterMenu(Character& character) {
             break;
         case 6:
             system("CLS");
+            manageInventory(character); 
+            break;
+        case 7:
+            system("CLS");
             std::cout << "\n\t\tRetour au menu precedent...\n\n";
             break;
         default:
             system("CLS");
             std::cout << "\n\tOption non valide. Veuillez choisir a nouveau.\n";
         }
-    } while (choice != 6);
+    } while (choice != 7);
 }
+void Menu::manageInventory(Character& character) {
+    int choice = 0;
+    do {
+        std::cout << "\n\t\t=== GERER L'INVENTAIRE ===\n";
+        std::cout << "1. Ajouter un objet par index\n";
+        std::cout << "2. Supprimer un objet\n";
+        std::cout << "3. Retour\n";
+        std::cout << "\n\t\tChoisissez une option: ";
+
+        std::cin >> choice;
+
+        switch (choice) {
+        case 1: {
+            // Afficher les objets disponibles
+            auto availableItems = character.getInventory().getAvailableItems();
+            std::cout << "\nObjets disponibles :\n";
+            for (size_t i = 0; i < availableItems.size(); ++i) {
+                std::cout << i << ". " << availableItems[i]->getName() << "\n";
+            }
+
+            int itemIndex;
+            std::cout << "\n\tEntrez l'index de l'objet à ajouter: ";
+            std::cin >> itemIndex;
+
+            if (character.getInventory().addItemByIndex(itemIndex, availableItems)) {
+                std::cout << "\n\tObjet ajouté.\n";
+            }
+            else {
+                std::cout << "\n\tÉchec de l'ajout de l'objet.\n";
+            }
+            break;
+        }
+        case 2:
+            // Votre logique pour supprimer un objet
+            break;
+        case 3:
+            std::cout << "\n\tRetour au menu précédent...\n";
+            break;
+        default:
+            std::cout << "\n\tOption non valide. Veuillez choisir à nouveau.\n";
+        }
+    } while (choice != 3);
+}
+
 
 void Menu::showManageCharactersMenu(Character& character1, Character& character2) {
     int choice = 0;
@@ -244,7 +398,7 @@ void Menu::showManageCharactersMenu(Character& character1, Character& character2
     } while (choice != 3);
 }
 
-void Menu::showMainMenu(Character& character1, Character& character2) {
+void Menu::showMainMenu(Character& character1, Character& character2, const std::vector<std::unique_ptr<Item>>& availableItems) {
     int choice = 0;
     do {
         std::cout << "\n\t\t=== MENU PRINCIPAL ===\n";

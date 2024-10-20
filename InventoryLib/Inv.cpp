@@ -12,16 +12,15 @@ Item* InventoryLib::getItem(int index) {
     return nullptr;
 }
 
-bool InventoryLib::removeItem(const std::string& itemName) {
-    auto it = std::remove_if(items.begin(), items.end(),
-        [&itemName](const std::unique_ptr<Item>& item) {
-            return item->getName() == itemName;
-        });
-    if (it != items.end()) {
-        items.erase(it, items.end());
+bool InventoryLib::removeItem(int index) {
+    if (index >= 0 && index < items.size()) {
+        items.erase(items.begin() + index);
         return true;
     }
-    return false;
+    else {
+        std::cout << "Index invalide.\n";
+        return false;  
+    }
 }
 
 void InventoryLib::displayInventoryByType(const std::string& type) const {
@@ -119,21 +118,139 @@ std::vector<Item*> InventoryLib::searchByStat(int minStat, int maxStat) const {
             }
         }
     }
-
+    
     return result;
 }
 
-void InventoryLib::sortByType() {
-    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
-        return a->getType() < b->getType();
+void InventoryLib::sortWeaponsByName(bool ascending) {
+    std::sort(items.begin(), items.end(), [ascending](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (dynamic_cast<Weapon*>(a.get()) && dynamic_cast<Weapon*>(b.get())) {
+            if (ascending) {
+                return a->getName() < b->getName();
+            }
+            else {
+                return a->getName() > b->getName();
+            }
+        }
+        return false;
         });
 }
 
-void InventoryLib::sortByElement() {
-    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
-        return static_cast<int>(a->getElement()) < static_cast<int>(b->getElement());
+
+
+void InventoryLib::sortByName(bool ascending) {
+    std::sort(items.begin(), items.end(), [ascending](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (ascending) {
+            return a->getName() < b->getName();
+        }
+        else {
+            return a->getName() > b->getName();
+        }
         });
 }
+
+
+void InventoryLib::sortByType(bool ascending) {
+    std::sort(items.begin(), items.end(), [ascending](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (ascending) {
+            return a->getType() < b->getType();
+        }
+        else {
+            return a->getType() > b->getType();
+        }
+        });
+}
+
+void InventoryLib::sortByStat(bool ascending) {
+    std::sort(items.begin(), items.end(), [ascending](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        int statA = 0, statB = 0;
+
+        if (auto weaponA = dynamic_cast<Weapon*>(a.get())) {
+            statA = weaponA->getAttack();
+        }
+        else if (auto armorA = dynamic_cast<Armor*>(a.get())) {
+            statA = armorA->getDefense();
+        }
+
+        if (auto weaponB = dynamic_cast<Weapon*>(b.get())) {
+            statB = weaponB->getAttack();
+        }
+        else if (auto armorB = dynamic_cast<Armor*>(b.get())) {
+            statB = armorB->getDefense();
+        }
+
+        if (ascending) {
+            return statA < statB;
+        }
+        else {
+            return statA > statB;
+        }
+        });
+}
+void InventoryLib::sortWeaponsByAttackAscending() {
+    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (auto weaponA = dynamic_cast<Weapon*>(a.get())) {
+            if (auto weaponB = dynamic_cast<Weapon*>(b.get())) {
+                return weaponA->getAttack() < weaponB->getAttack();
+            }
+        }
+        return false; // Ne change pas l'ordre si ce ne sont pas des armes
+        });
+}
+void InventoryLib::sortWeaponsByAttackDescending() {
+    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (auto weaponA = dynamic_cast<Weapon*>(a.get())) {
+            if (auto weaponB = dynamic_cast<Weapon*>(b.get())) {
+                return weaponA->getAttack() > weaponB->getAttack();
+            }
+        }
+        return false; // Ne change pas l'ordre si ce ne sont pas des armes
+        });
+}
+void InventoryLib::sortArmorsByDefenseAscending() {
+    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (auto armorA = dynamic_cast<Armor*>(a.get())) {
+            if (auto armorB = dynamic_cast<Armor*>(b.get())) {
+                return armorA->getDefense() < armorB->getDefense();
+            }
+        }
+        return false; // Ne change pas l'ordre si ce ne sont pas des armures
+        });
+}
+void InventoryLib::sortArmorsByDefenseDescending() {
+    std::sort(items.begin(), items.end(), [](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (auto armorA = dynamic_cast<Armor*>(a.get())) {
+            if (auto armorB = dynamic_cast<Armor*>(b.get())) {
+                return armorA->getDefense() > armorB->getDefense();
+            }
+        }
+        return false; // Ne change pas l'ordre si ce ne sont pas des armures
+        });
+}
+
+
+void InventoryLib::sortByElement(bool ascending)  { 
+    std::sort(items.begin(), items.end(), [ascending](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (ascending) {
+            return a->getElement() < b->getElement();
+        }
+        else {
+            return a->getElement() > b->getElement();
+        }
+        });
+}
+
+
+void InventoryLib::sortByRarity(bool ascending) {
+    std::sort(items.begin(), items.end(), [ascending](const std::unique_ptr<Item>& a, const std::unique_ptr<Item>& b) {
+        if (ascending) {
+            return a->getRarity() < b->getRarity();
+        } else {
+            return a->getRarity() > b->getRarity();
+        }
+    });
+}
+
 
 size_t InventoryLib::getItemCount() const {
     return items.size();
@@ -204,4 +321,31 @@ std::vector<Item*> InventoryLib::searchByCriteria(const std::string& name, const
     }
 
     return results;
+}
+
+
+std::vector<std::unique_ptr<Item>> InventoryLib::getAvailableItems() {
+    std::vector<std::unique_ptr<Item>> availableItems;
+    for (const auto& item : items) {
+        if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+            availableItems.push_back(std::make_unique<Weapon>(*weapon));
+        }
+        else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+            availableItems.push_back(std::make_unique<Armor>(*armor));
+        }
+    }
+    return availableItems;
+}
+
+bool InventoryLib::addItemByIndex(int index, const std::vector<std::unique_ptr<Item>>& availableItems) {
+    if (index >= 0 && index < availableItems.size()) {
+        if (auto weapon = dynamic_cast<Weapon*>(availableItems[index].get())) {
+            addItem(std::make_unique<Weapon>(*weapon));
+        }
+        else if (auto armor = dynamic_cast<Armor*>(availableItems[index].get())) {
+            addItem(std::make_unique<Armor>(*armor));
+        }
+        return true;
+    }
+    return false;
 }

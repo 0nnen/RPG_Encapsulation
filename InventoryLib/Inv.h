@@ -4,7 +4,6 @@
 #include <memory>
 #include <string>
 #include <algorithm>
-#include <iostream>
 #include "Item.h"
 #include "Weapon.h"
 #include "Armor.h"
@@ -23,11 +22,21 @@ public:
     void addItemsFromList(const std::vector<std::unique_ptr<Item>>& allItems);
     void addRandomItems(const std::vector<std::unique_ptr<Item>>& allItems, int itemCount);
     size_t getSize() const { return items.size(); }
-
-    bool removeItem(const std::string& itemName);
+    bool removeItem(int index); 
     std::vector<Item*> searchByStat(int minStat, int maxStat) const;
-    void sortByType();
-    void sortByElement();
+
+    void sortByName(bool ascending = true);  
+    void sortByType(bool ascending = true);
+    void sortByStat(bool ascending = true);  
+    void sortByElement(bool ascending);
+    void sortByRarity(bool ascending = true); 
+    void sortWeaponsByName(bool ascending = true);
+
+    void sortWeaponsByAttackAscending();
+    void sortWeaponsByAttackDescending();
+    void sortArmorsByDefenseAscending();
+    void sortArmorsByDefenseDescending();
+
     size_t getItemCount() const;
     std::vector<Item*> getItems() const;
     void displayItems() const;
@@ -35,4 +44,7 @@ public:
         int minAttack, int maxAttack,
         int minDefense, int maxDefense,
         const std::string& element) const;
+
+    std::vector<std::unique_ptr<Item>> getAvailableItems();
+    bool addItemByIndex(int index, const std::vector<std::unique_ptr<Item>>& availableItems);
 };
